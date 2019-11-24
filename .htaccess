@@ -1,0 +1,26 @@
+Options All -Indexes
+
+ErrorDocument 404 /error/404.html
+ErrorDocument 403 /error/403.html
+ErrorDocument 500 /error/500.html
+
+DirectoryIndex index.php
+
+RewriteEngine On
+
+RewriteRule ^\.well-known/.+ - [END]
+
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP_HOST} ^broskies.gtdu.org$
+RewriteCond %{REQUEST_URI} !api/
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L]
+
+RewriteCond %{HTTP_HOST} ^broskies.gtdu.org$
+RewriteCond %{REQUEST_URI} !=/server-status
+RewriteCond %{REQUEST_URI} !api/
+RewriteCond %{REQUEST_URI} !error/
+RewriteCond %{REQUEST_URI} !modules/
+RewriteCond %{REQUEST_URI} !public/
+RewriteCond %{REQUEST_URI} !resources/
+RewriteCond %{REQUEST_URI} !vendor/
+RewriteRule (.*) /public/$1 [L]

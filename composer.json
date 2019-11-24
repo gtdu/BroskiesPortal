@@ -1,0 +1,13 @@
+{
+    "name": "ryan/du_backend",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Ryan Cobelli",
+            "email": "ryan.cobelli@rybel-llc.com"
+        }
+    ],
+    "require": {
+        "ramsey/uuid": "^3.8"
+    }
+}
