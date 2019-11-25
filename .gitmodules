@@ -1,3 +1,6 @@
 [submodule "modules/BroskiesPortal-Resources"]
 	path = modules/BroskiesPortal-Resources
 	url = https://github.com/rcobelli/BroskiesPortal-Resources.git
+[submodule "modules/BroskiesPortal-Lore"]
+	path = modules/BroskiesPortal-Lore
+	url = https://github.com/rcobelli/BroskiesPortal-Lore.git
