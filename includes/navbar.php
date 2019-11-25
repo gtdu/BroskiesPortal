@@ -9,6 +9,10 @@ if (!empty($result)) {
     unset($data['name']);
     unset($data['password']);
     unset($data['session_token']);
+} else if ($data['core'] == 0) {
+    $_SESSION['token'] = NULL;
+    header("Location: index.php");
+    die();
 } else {
     $_SESSION['token'] = NULL;
     header("Location: index.php");

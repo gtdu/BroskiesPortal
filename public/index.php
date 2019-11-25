@@ -26,8 +26,6 @@ init_site($site);
 $page = new page();
 $site->setPage($page);
 
-// $site->addHeader("../includes/navbar.php");
-
 // Start rendering the content
 ob_start();
 
