@@ -13,6 +13,13 @@ function logMessage($message)
     print($message);
 }
 
+function getCurrentPermissions($config) {
+    $handle = $config['dbo']->prepare('SELECT * FROM users WHERE session_token = ? LIMIT 1');
+    $handle->bindValue(1, $_SESSION['token']);
+    $handle->execute();
+    return $handle->fetchAll(\PDO::FETCH_ASSOC)[0];
+}
+
 function devEnv()
 {
     return gethostname() == "Ryans-MBP";

@@ -2,3 +2,4 @@
 vendor/
 config.ini
 public/docs/*
+modules/*

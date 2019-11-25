@@ -8,40 +8,21 @@ init_site($site);
 $page = new page(true);
 $site->setPage($page);
 
+$helper = new AdminHelper($config);
+
 // Start rendering the content
 ob_start();
 
-$handle = $config['dbo']->prepare('SELECT * FROM users WHERE session_token = ? LIMIT 1');
-$handle->bindValue(1, $_SESSION['token']);
-$handle->execute();
-$result = $handle->fetchAll(\PDO::FETCH_ASSOC);
+include_once("../includes/navbar.php");
 
-if (!empty($result)) {
-    $data = $result[0];
-    unset($data['id']);
-    unset($data['email']);
-    unset($data['name']);
-    unset($data['password']);
-    unset($data['session_token']);
-} else {
-    $_SESSION['token'] = NULL;
-    die();
-}
+?>
+<div class="d-flex content container">
+    <?php if (isset($_GET['page'])): ?>
+        <iframe src="<?php echo $helper->getModule($_GET['page'])['root_url'] . "?session_token=" . $_SESSION['token']; ?>" class="flex-fill"></iframe>
+    <?php endif; ?>
+</div>
 
-echo "</br></br>";
-
-foreach ($data as $key => $value) {
-    if ($value > 0) {
-        $handle = $config['dbo']->prepare('SELECT name, root_url FROM modules WHERE pem_name = ? LIMIT 1');
-        $handle->bindValue(1, $key);
-        $handle->execute();
-        $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
-
-        if (!empty($result)) {
-            echo "<a href='" . $result[0]['root_url'] . "?session_token=" . $_SESSION['token'] . "' target='_blank'>" . $result[0]['name'] . "</a></br>";
-        }
-    }
-}
+<?php
 
 // End rendering the content
 $content = ob_get_clean();
