@@ -10,11 +10,6 @@ RewriteEngine On
 
 RewriteRule ^\.well-known/.+ - [END]
 
-RewriteCond %{HTTPS} !=on
-RewriteCond %{HTTP_HOST} ^broskies.gtdu.org$
-RewriteCond %{REQUEST_URI} !api/
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L]
-
 RewriteCond %{HTTP_HOST} ^broskies.gtdu.org$
 RewriteCond %{REQUEST_URI} !=/server-status
 RewriteCond %{REQUEST_URI} !api/
