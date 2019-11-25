@@ -38,7 +38,7 @@ ob_start();
         </div>
         <div class="form-group">
             <label for="loginPassword">Password</label>
-            <input name="password" type="password" class="form-control" id="loginPassword" aria-describedby="emailHelp" placeholder="DikiaCunt" required>
+            <input name="password" type="password" class="form-control" id="loginPassword" aria-describedby="emailHelp" placeholder="DikiaBrother" required>
         </div>
         <input type="hidden" name="action" value="resetPassword">
         <button type="submit" class="btn btn-primary">Login</button>
