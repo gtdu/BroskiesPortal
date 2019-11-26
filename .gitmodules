@@ -4,3 +4,6 @@
 [submodule "modules/BroskiesPortal-Lore"]
 	path = modules/BroskiesPortal-Lore
 	url = https://github.com/gtdu/BroskiesPortal-Lore.git
+[submodule "modules/BroskiesPortal-JBoard"]
+	path = modules/BroskiesPortal-JBoard
+	url = https://github.com/gtdu/BroskiesPortal-JBoard.git
