@@ -43,7 +43,7 @@ ob_start();
         <input type="hidden" name="action" value="resetPassword">
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
-    <div class="mt-3"><a onclick="alert('Please email the Member at Large (webmaster@rybel-llc.com) for assistance!');">Forgot Password?</a></div>
+    <div class="mt-3"><a href="reset.php">Forgot Password?</a></div>
 </div>
 <?php
 

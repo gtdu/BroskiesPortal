@@ -30,7 +30,8 @@ try {
 }
 
 $config = array(
-    'dbo' => $pdo
+    'dbo' => $pdo,
+    'email_password' => $ini['email_password']
 );
 
 $errors = array();
