@@ -40,3 +40,8 @@ If a user is designated as a `Administrator`, then they will also have access to
     2. Update the variables in `config.ini`
     3. Run `setup.sql` to create the database and default data
     4. The default login will be `admin@email.com` and `1234`
+
+## Todo
+  - Allow editing of modules through the GUI (currently has to be done directly in the database)
+  - Allow modules to adjust permissions themselves
+  - Allow modules to set a custom visibility threshold
