@@ -45,3 +45,4 @@ If a user is designated as a `Administrator`, then they will also have access to
   - Allow editing of modules through the GUI (currently has to be done directly in the database)
   - Allow modules to adjust permissions themselves
   - Allow modules to set a custom visibility threshold
+  - Easier method for users to change their passwords via the GUI
