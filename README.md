@@ -10,7 +10,9 @@ This central platform serves as the login and permission management center that 
 ## Adding New Modules
 To add a new module, you must first navigate to the `Manage Modules` tab with a `Administrator` account. From here, you will generate an API key for that module. Now, all a sub-application needs to do is make an API call to `https://YOUR_URL.com/api/` with a POST request for `api_key` (which you just generated) and `session_token`.
 
-Your module will be loaded as an iFrame within the main application window. You will enter the URL that should be displayed when you generate the api key and when the application is loaded, there will be a GET parameter that contains the current user's session token.
+A `standard` module will be loaded as an iFrame within the main application window. You will enter the URL that should be displayed when you generate the api key and when the application is loaded, there will be a GET parameter that contains the current user's session token.
+
+You can also create an `external` module that will just open your URL + the session token in a new tab.
 
 ### Example Module
 | Field | Value|
@@ -38,11 +40,11 @@ If a user is designated as a `Administrator`, then they will also have access to
 ## Setup
     1. Rename `example config.ini` to `config.ini`
     2. Update the variables in `config.ini`
+       1. The email credentials are what will be used to send the welcome & password reset emails
     3. Run `setup.sql` to create the database and default data
     4. The default login will be `admin@email.com` and `1234`
 
 ## Todo
-  - Allow editing of modules through the GUI (currently has to be done directly in the database)
   - Allow modules to adjust permissions themselves
-  - Allow modules to set a custom visibility threshold
+  - Allow modules to specify enums of their permission levels
   - Easier method for users to change their passwords via the GUI

@@ -19,6 +19,7 @@ CREATE TABLE `modules` (
     `name` varchar(255) NOT NULL DEFAULT '',
     `root_url` varchar(255) NOT NULL DEFAULT '',
     `pem_name` varchar(255) NOT NULL DEFAULT '',
+    `external` tinyint(1) NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

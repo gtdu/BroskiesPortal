@@ -50,17 +50,19 @@ unset($data['core']);
 
 foreach ($data as $key => $value) {
     if ($value > 0) {
-        $handle = $config['dbo']->prepare('SELECT id, name, root_url FROM modules WHERE pem_name = ? LIMIT 1');
+        $handle = $config['dbo']->prepare('SELECT id, name, root_url, external FROM modules WHERE pem_name = ? LIMIT 1');
         $handle->bindValue(1, $key);
         $handle->execute();
-        $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $handle->fetchAll(\PDO::FETCH_ASSOC)[0];
 
         if (!empty($result)) {
-            ?>
-            <li class="nav-item active">
-                <a class="nav-link" href="dashboard.php?page=<?php echo $result[0]['id']; ?>"><?php echo $result[0]['name']; ?></a>
-            </li>
-            <?php
+            echo '<li class="nav-item active">';
+            if ($result['external']) {
+                echo '<a class="nav-link" href="' . $result['root_url'] . '?session_token=' . $_SESSION['token'] . '" target="_blank">' . $result['name'] . '</a>';
+            } else {
+                echo '<a class="nav-link" href="dashboard.php?page=' . $result['id'] . '">' . $result['name'] . '</a>';
+            }
+            echo '</li>';
         }
     }
 }

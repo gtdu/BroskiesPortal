@@ -64,7 +64,7 @@ class AdminHelper
             $mail->isSMTP();                                            // Send using SMTP
             $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-            $mail->Username   = 'ryan.cobelli@gmail.com';               // SMTP username
+            $mail->Username   = $this->config['email_address'];              // SMTP username
             $mail->Password   = $this->config['email_password'];                     // SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
             $mail->Port       = 587;                                    // TCP port to connect to
@@ -124,21 +124,35 @@ class AdminHelper
     }
 
     // Create new module
-    public function createNewModule($module_name, $root_url) {
+    public function createNewModule($module_name, $root_url, $external, $defaultAccess) {
         $api_key = Uuid::uuid4()->toString();
         $perm_name = strtolower(removeNonAlphaNumeric($module_name));
 
-        $handle = $this->conn->prepare('INSERT INTO modules (api_token, name, pem_name, root_url) VALUES (?, ?, ?, ?)');
+        if ($external == "on") {
+            $external = 1;
+        } else {
+            $external = 0;
+        }
+
+        $handle = $this->conn->prepare('INSERT INTO modules (api_token, name, pem_name, root_url, external) VALUES (?, ?, ?, ?, ?)');
         $handle->bindValue(1, $api_key);
         $handle->bindValue(2, $module_name);
         $handle->bindValue(3, $perm_name);
         $handle->bindValue(4, $root_url);
+        $handle->bindValue(5, $external);
         $handle->execute();
 
-        $handle = $this->conn->prepare('ALTER TABLE `users` ADD `' . $perm_name . '` INT(1) NOT NULL DEFAULT \'1\'');
-        $handle->execute();
+        $handle = $this->conn->prepare('ALTER TABLE `users` ADD `' . $perm_name . '` INT(1) NOT NULL DEFAULT ?');
+        $handle->bindValue(1, $defaultAccess);
+        return $handle->execute();
+    }
 
-        return $api_key;
+    // Edit module
+    public function editModule($module_id, $root_url) {
+        $handle = $this->conn->prepare('UPDATE modules SET root_url = ? WHERE id = ?');
+        $handle->bindValue(1, $root_url);
+        $handle->bindValue(2, $module_id);
+        return $handle->execute();
     }
 
     // Delete a module
