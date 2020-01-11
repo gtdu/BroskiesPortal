@@ -7,3 +7,6 @@
 [submodule "modules/BroskiesPortal-JBoard"]
 	path = modules/BroskiesPortal-JBoard
 	url = https://github.com/gtdu/BroskiesPortal-JBoard.git
+[submodule "modules/BroskiesPortal-LatePlate"]
+	path = modules/BroskiesPortal-LatePlate
+	url = https://github.com/gtdu/BroskiesPortal-LatePlate.git
