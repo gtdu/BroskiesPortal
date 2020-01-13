@@ -22,7 +22,7 @@ class LoginHelper
             return false;
         }
 
-        $handle = $this->conn->prepare('SELECT id, password FROM users WHERE email = ? LIMIT 1');
+        $handle = $this->conn->prepare('SELECT id, password, name FROM users WHERE email = ? LIMIT 1');
         $handle->bindValue(1, $data['email']);
         $handle->execute();
         $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
@@ -36,6 +36,8 @@ class LoginHelper
             $handle->execute();
 
             $_SESSION['token'] = $token;
+            $_SESSION['name'] = $result[0]['name'];
+            $_SESSION['email'] = $data['email'];
 
             return true;
         } else {

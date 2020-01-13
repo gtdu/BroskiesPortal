@@ -77,7 +77,7 @@ class AdminHelper
             // Content
             $mail->isHTML(true);                                  // Set email format to HTML
             $mail->Subject = 'Welcome To Broskies Portal!';
-            $mail->Body    = "Welcome to Broskies Portal, where you can access a bunch of useful shit in one place. Please login at: https://broskies.gtdu.org/. Your password is " . $password . ". If you have any questions, please respond to this email.";
+            $mail->Body    = "Welcome to Broskies Portal!</br></br>Broskies Portal is where you can access a bunch of useful shit in one place. Please login at: https://broskies.gtdu.org/. Your login is:</br>Email: " . $email . "</br>Password: " . $password . "</br></br>If you have any questions, please respond to this email.";
 
             $mail->send();
         } catch (Exception $e) {

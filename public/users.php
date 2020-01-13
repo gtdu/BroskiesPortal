@@ -69,7 +69,7 @@ if ($_GET['action'] == 'resetPassword') {
             </div>
             <div class="form-group">
                 <label for="resetPasswordPassword">New Password</label>
-                <input name="password" type="password" class="form-control" id="resetPasswordPassword" aria-describedby="emailHelp" placeholder="DikiaCunt" required>
+                <input name="password" type="text" class="form-control" id="resetPasswordPassword" aria-describedby="emailHelp" placeholder="DikiaCunt" required>
             </div>
             <input type="hidden" name="action" value="resetPassword">
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -79,21 +79,30 @@ if ($_GET['action'] == 'resetPassword') {
 } else if ($_GET['action'] == 'newUser') {
     ?>
     <div class="pl-4 pr-4 mb-4">
+        <script>
+        function generatePassword() {
+            var words = ["Fuck", "Shit", "Bitch", "Ass", "Cunt", "Bastard"];
+            var randomWord = words[Math.floor(Math.random() * words.length)];
+            var randomNumber = Math.floor(Math.random() * 100);
+            document.getElementById("newUserPassword").value = "Dikaia" + randomWord + randomNumber
+        }
+        </script>
         <form method="post">
             <div class="form-group">
                 <label for="newUserName">Name</label>
-                <input name="name" type="text" class="form-control" id="newUserName" aria-describedby="emailHelp" placeholder="Facinto Jernandez" required>
+                <input name="name" type="text" class="form-control" id="newUserName" aria-describedby="emailHelp" placeholder="Jernandez, Facinto" required>
             </div>
             <div class="form-group">
                 <label for="newUserEmail">Email</label>
                 <input name="email" type="email" class="form-control" id="newUserEmail" aria-describedby="emailHelp" placeholder="dude@gtdu.org" required>
             </div>
             <div class="form-group">
+                <button type="button" class="btn btn-outline-secondary float-right btn-sm" onclick="generatePassword()">Generate Password</button>
                 <label for="newUserPassword">Password</label>
-                <input name="password" type="password" class="form-control" id="newUserPassword" aria-describedby="emailHelp" placeholder="DikiaCunt" required>
+                <input name="password" type="text" class="form-control" id="newUserPassword" aria-describedby="emailHelp" placeholder="DikaiaCunt" required>
             </div>
             <input type="hidden" name="action" value="newUser">
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit" class="btn btn-success">Create User</button>
         </form>
     </div>
     <?php
