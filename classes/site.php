@@ -9,6 +9,11 @@ class site
     private $errors;
     private $success;
 
+    public $userEmail;
+    public $userName;
+    public $userCorePem;
+    public $userID;
+
     public function __construct($pageTitle)
     {
         $this->headers = array();
@@ -18,11 +23,6 @@ class site
 
     public function render()
     {
-        if ($this->page->requiresAuth && empty($_SESSION['token'])) {
-            header("Location: index.php");
-            die();
-        }
-
         foreach ($this->headers as $header) {
             include $header;
         }
@@ -51,6 +51,35 @@ class site
     public function setPage(page $page)
     {
         $this->page = $page;
+
+        global $config;
+
+        if ($this->page->requiresAuth) {
+            // Check that a token is set
+            if (empty($_SESSION['token'])) {
+                session_destroy();
+                header("Location: index.php");
+                die();
+            }
+
+            // Validate session token
+            $handle = $config['dbo']->prepare('SELECT id, name, email, core FROM users WHERE session_token = ?');
+            $handle->bindValue(1, $_SESSION['token']);
+            $handle->execute();
+            $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
+
+            if (empty($result)) {
+                session_destroy();
+                header("Location: index.php");
+                die();
+            }
+
+            // Store user information
+            $this->userName = $result[0]['name'];
+            $this->userEmail = $result[0]['email'];
+            $this->userID = $result[0]['id'];
+            $this->userCorePem = $result[0]['core'];
+        }
     }
 
     private function renderErrors()

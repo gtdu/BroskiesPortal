@@ -33,8 +33,6 @@ class LoginHelper
             $handle->execute();
 
             $_SESSION['token'] = $token;
-            $_SESSION['name'] = $result[0]['name'];
-            $_SESSION['email'] = $data['email'];
 
             return true;
         } else {
