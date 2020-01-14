@@ -8,7 +8,7 @@ if (!empty($_POST)) {
     if ($lh->validateLogin($_POST)) {
         header("Location: dashboard.php");
     } else {
-        $_SESSION['errors'][0] = "Incorrect credentials";
+        $_SESSION['error'][0] = "Incorrect credentials";
     }
 } elseif ($_GET['action'] == 'logout') {
     $lh->logout();

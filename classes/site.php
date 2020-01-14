@@ -85,16 +85,16 @@ class site
     private function renderErrors()
     {
         $errorOutput = "";
-        if (empty($_SESSION['errors'])) {
+        if (empty($_SESSION['error'])) {
             return;
         }
-        foreach ($this->errors as $error) {
+        foreach ($_SESSION['error'] as $error) {
             echo '<script>alert("';
             echo $error;
             echo '")</script>';
         }
 
-        unset($_SESSION['errors']);
+        unset($_SESSION['error']);
     }
 
     private function renderSuccess()
