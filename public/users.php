@@ -53,14 +53,14 @@ include_once("../includes/navbar.php");
 
 ?>
 <div class="container">
-<h1 class="mt-2">Manage Users</h1>
-<div class="d-flex mt-3 mb-3">
-    <div class="btn-group flex-fill" role="group" aria-label="Basic example">
-        <a href="?action=newUser" class="btn btn-warning">Create New User</a>
-        <a href="?action=deleteUser" class="btn btn-warning">Delete User</a>
-        <a href='?action=resetPassword' class="btn btn-warning">Reset User Password</a>
-        <a href='?action=changeCore' class="btn btn-warning">Change Core Permission Level</a>
-        <a href='?action=changePermission' class="btn btn-warning">Change Module Permission Level</a>
+    <h1 class="mt-2">Manage Users</h1>
+    <div class="d-flex mt-3 mb-3">
+        <div class="btn-group flex-fill" role="group" aria-label="Basic example">
+            <a href="?action=newUser" class="btn btn-warning">Create New User</a>
+            <a href="?action=deleteUser" class="btn btn-warning">Delete User</a>
+            <a href='?action=changeCore' class="btn btn-warning">Change Core Permission Level</a>
+            <a href='?action=changePermission' class="btn btn-warning">Change Module Permission Level</a>
+        </div>
     </div>
     <script>
     function generatePassword() {

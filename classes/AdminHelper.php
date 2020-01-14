@@ -143,4 +143,28 @@ class AdminHelper
             return false;
         }
     }
+
+    // Get dynamic configuration values
+    public function getDynamicConfig() {
+        global $config;
+
+        $handle = $config['dbo']->prepare('SELECT * FROM config ORDER BY id');
+        $handle->execute();
+        $results = $handle->fetchAll(\PDO::FETCH_ASSOC);
+
+        $output = array();
+        foreach ($results as $r) {
+            $output[$r['key']] = $r['value'];
+        }
+
+        return $output;
+    }
+
+    // Modify dynamic configurations
+    public function updateDynamicConfig($key, $value) {
+        $handle = $this->conn->prepare('UPDATE config SET `value` = ? WHERE `key` = ?');
+        $handle->bindValue(1, $value);
+        $handle->bindValue(2, $key);
+        return $handle->execute();
+    }
 }
