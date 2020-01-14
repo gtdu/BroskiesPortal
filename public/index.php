@@ -8,7 +8,7 @@ if (!empty($_POST)) {
     if ($lh->validateLogin($_POST)) {
         header("Location: dashboard.php");
     } else {
-        $errors[] = "Incorrect credentials";
+        $_SESSION['errors'][0] = "Incorrect credentials";
     }
 } elseif ($_GET['action'] == 'logout') {
     $lh->logout();
@@ -20,7 +20,7 @@ if (!empty($_SESSION['token'])) {
 }
 
 // Site/page boilerplate
-$site = new site('GTDU', $errors);
+$site = new site('GTDU');
 init_site($site);
 
 $page = new page();

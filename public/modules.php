@@ -12,17 +12,29 @@ $helper = new AdminHelper($config);
 $modules = $helper->getModules();
 
 if ($_POST['action'] == 'newModule') {
-    $helper->createNewModule($_POST['name'], $_POST['url'], $_POST['external'], $_POST['defaultAccess']);
+    if ($helper->createNewModule($_POST['name'], $_POST['url'], $_POST['external'], $_POST['defaultAccess'])) {
+        $_SESSION['success'] = true;
+    } else {
+        $_SESSION['error'][0] = $site->getSQLError();
+    }
     header("Location: ?");
     die();
 } else if ($_POST['action'] == 'deleteModule') {
-   $helper->deleteModule($_POST['module']);
-   header("Location: ?");
-   die();
+    if ($helper->deleteModule($_POST['module'])) {
+        $_SESSION['success'] = true;
+    } else {
+        $_SESSION['error'][0] = $site->getSQLError();
+    }
+    header("Location: ?");
+    die();
 } else if ($_POST['action'] == 'editModule') {
-   $helper->editModule($_POST['module'], $_POST['url']);
-   header("Location: ?");
-   die();
+    if ($helper->editModule($_POST['module'], $_POST['url'])) {
+        $_SESSION['success'] = true;
+    } else {
+        $_SESSION['error'][0] = $site->getSQLError();
+    }
+    header("Location: ?");
+    die();
 }
 
 // Start rendering the content

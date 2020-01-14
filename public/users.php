@@ -11,24 +11,36 @@ $site->setPage($page);
 $helper = new AdminHelper($config);
 $users = $helper->getUsers();
 
-if ($_POST['action'] == 'resetPassword') {
-    $helper->resetUserPassword($_POST['user'], $_POST['password']);
-    header("Location: ?");
-    die();
-} else if ($_POST['action'] == 'newUser') {
-    $helper->newUser($_POST['name'], $_POST['email'], $_POST['password']);
+if ($_POST['action'] == 'newUser') {
+    if ($helper->newUser($_POST['name'], $_POST['email'], $_POST['password'])) {
+        $_SESSION['success'] = true;
+    } else {
+        $_SESSION['error'][0] = $site->getSQLError();
+    }
     header("Location: ?");
     die();
 } else if ($_POST['action'] == 'deleteUser') {
-    $helper->deleteUser($_POST['user']);
+    if ($helper->deleteUser($_POST['user'])) {
+        $_SESSION['success'] = true;
+    } else {
+        $_SESSION['error'][0] = $site->getSQLError();
+    }
     header("Location: ?");
     die();
 } else if ($_POST['action'] == 'changeCore') {
-    $helper->setUserPerm($_POST['user'], 'core', $_POST['level']);
+    if ($helper->setUserPerm($_POST['user'], 'core', $_POST['level'])) {
+        $_SESSION['success'] = true;
+    } else {
+        $_SESSION['error'][0] = $site->getSQLError();
+    }
     header("Location: ?");
     die();
 } else if ($_POST['action'] == 'changePermission') {
-    $helper->setUserPerm($_POST['user'], $_POST['module'], $_POST['level']);
+    if ($helper->setUserPerm($_POST['user'], $_POST['module'], $_POST['level'])) {
+        $_SESSION['success'] = true;
+    } else {
+        $_SESSION['error'][0] = $site->getSQLError();
+    }
     header("Location: ?");
     die();
 }

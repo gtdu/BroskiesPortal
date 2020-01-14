@@ -9,13 +9,11 @@ class site
     private $errors;
     private $success;
 
-    public function __construct($pageTitle, $errors = null, $success = false)
+    public function __construct($pageTitle)
     {
         $this->headers = array();
         $this->footers = array();
         $this->title = $pageTitle;
-        $this->errors = $errors;
-        $this->success = $success;
     }
 
     public function render()
@@ -58,7 +56,7 @@ class site
     private function renderErrors()
     {
         $errorOutput = "";
-        if (empty($this->errors)) {
+        if (empty($_SESSION['errors'])) {
             return;
         }
         foreach ($this->errors as $error) {
@@ -66,12 +64,20 @@ class site
             echo $error;
             echo '")</script>';
         }
+
+        unset($_SESSION['errors']);
     }
 
     private function renderSuccess()
     {
-        if ($this->success) {
+        if ($_SESSION['success']) {
             echo '<script>alert("Success!")</script>';
+            unset($_SESSION['success']);
         }
+    }
+
+    public function getSQLError() {
+        global $config;
+        return $config['dbo']->errorInfo()[2];
     }
 }

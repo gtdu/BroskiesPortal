@@ -18,7 +18,7 @@ class PermissionHelper
         $handle->bindValue(1, $api_key);
         $handle->execute();
         $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
-        
+
         if (!empty($result)) {
 
             $handle = $this->conn->prepare('SELECT `' . $result[0]['pem_name'] . '`, name, email, id FROM users WHERE session_token = ? LIMIT 1');
