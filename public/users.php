@@ -52,143 +52,14 @@ include_once("../includes/navbar.php");
     </div>
 </div>
 <?php
-
-if ($_GET['action'] == 'resetPassword') {
-    ?>
-    <div class="pl-4 pr-4 mb-4">
-        <form method="post">
-            <div class="form-group">
-                <label for="resetPasswordUser">User</label>
-                <select name="user" required id="resetPasswordUser">
-                    <?php
-                    foreach ($users as $user) {
-                        echo "<option value='" . $user['id'] . "'>" . $user['name'] . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="resetPasswordPassword">New Password</label>
-                <input name="password" type="text" class="form-control" id="resetPasswordPassword" aria-describedby="emailHelp" placeholder="DikiaCunt" required>
-            </div>
-            <input type="hidden" name="action" value="resetPassword">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-    <?php
-} else if ($_GET['action'] == 'newUser') {
-    ?>
-    <div class="pl-4 pr-4 mb-4">
-        <script>
-        function generatePassword() {
-            var words = ["Fuck", "Shit", "Bitch", "Ass", "Cunt", "Bastard"];
-            var randomWord = words[Math.floor(Math.random() * words.length)];
-            var randomNumber = Math.floor(Math.random() * 100);
-            document.getElementById("newUserPassword").value = "Dikaia" + randomWord + randomNumber
-        }
-        </script>
-        <form method="post">
-            <div class="form-group">
-                <label for="newUserName">Name</label>
-                <input name="name" type="text" class="form-control" id="newUserName" aria-describedby="emailHelp" placeholder="Jernandez, Facinto" required>
-            </div>
-            <div class="form-group">
-                <label for="newUserEmail">Email</label>
-                <input name="email" type="email" class="form-control" id="newUserEmail" aria-describedby="emailHelp" placeholder="dude@gtdu.org" required>
-            </div>
-            <div class="form-group">
-                <button type="button" class="btn btn-outline-secondary float-right btn-sm" onclick="generatePassword()">Generate Password</button>
-                <label for="newUserPassword">Password</label>
-                <input name="password" type="text" class="form-control" id="newUserPassword" aria-describedby="emailHelp" placeholder="DikaiaCunt" required>
-            </div>
-            <input type="hidden" name="action" value="newUser">
-            <button type="submit" class="btn btn-success">Create User</button>
-        </form>
-    </div>
-    <?php
+if ($_GET['action'] == 'newUser') {
+    include_once("../components/newUserForm.php");
 } else if ($_GET['action'] == 'deleteUser') {
-    ?>
-    <div class="pl-4 pr-4 mb-4">
-        <form method="post">
-            <div class="form-group">
-                <label for="deleteUserUser">User</label>
-                <select name="user" required id="deleteUserUser">
-                    <?php
-                    foreach ($users as $user) {
-                        echo "<option value='" . $user['id'] . "'>" . $user['name'] . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <input type="hidden" name="action" value="deleteUser">
-            <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-    </div>
-    <?php
+    include_once("../components/deleteUserForm.php");
 } else if ($_GET['action'] == 'changeCore') {
-    ?>
-    <div class="pl-4 pr-4 mb-4">
-        <form method="post">
-            <div class="form-group">
-                <label for="changeCoreUser">User</label>
-                <select name="user" required id="changeCoreUser" class="form-control">
-                    <?php
-                    foreach ($users as $user) {
-                        echo "<option value='" . $user['id'] . "'>" . $user['name'] . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="changeCoreLevel">User</label>
-                <select name="level" required id="changeCoreLevel" class="form-control">
-                    <option value="0">No Access</option>
-                    <option value="1">Standard Brother</option>
-                    <option value="2">Administrator</option>
-                </select>
-            </div>
-            <input type="hidden" name="action" value="changeCore">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-    <?php
-}
-else if ($_GET['action'] == 'changePermission') {
-    ?>
-    <div class="pl-4 pr-4 mb-4">
-        <form method="post">
-            <div class="form-group">
-                <label for="changePermissionUser">User</label>
-                <select name="user" required id="changePermissionUser" class="form-control">
-                    <?php
-                    foreach ($users as $user) {
-                        echo "<option value='" . $user['id'] . "'>" . $user['name'] . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="changePermissionModule">Module</label>
-                <select name="module" required id="changePermissionModule" class="form-control">
-                    <?php
-                    $modules = $helper->getModules();
-                    foreach ($modules as $m) {
-                        if ($m['id'] != 1) {
-                            echo "<option value='" . $m['pem_name'] . "'>" . $m['name'] . "</option>";
-                        }
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="changePermissionLevel">Level</label>
-                <input name="level" type="number" min="0" step="1" class="form-control" id="changePermissionLevel" aria-describedby="emailHelp" value="1" required>
-            </div>
-            <input type="hidden" name="action" value="changePermission">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-    <?php
+    include_once("../components/changeCorePemForm.php");
+} else if ($_GET['action'] == 'changePermission') {
+    include_once("../components/changePemForm.php");
 }
 ?>
 
