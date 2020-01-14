@@ -15,7 +15,7 @@ class AdminHelper
 
     // Load all users
     public function getUsers() {
-        $handle = $this->conn->prepare('SELECT * FROM users');
+        $handle = $this->conn->prepare('SELECT * FROM users ORDER BY name, id');
         $handle->execute();
         return $handle->fetchAll(\PDO::FETCH_ASSOC);
     }

@@ -62,7 +62,12 @@ include_once("../includes/navbar.php");
         <a href='?action=changeCore' class="btn btn-warning">Change Core Permission Level</a>
         <a href='?action=changePermission' class="btn btn-warning">Change Module Permission Level</a>
     </div>
-</div>
+    <script>
+    function generatePassword() {
+        var randomNumber = Math.floor(Math.random() * 100);
+        document.getElementById("newUserPassword").value = "DikaiaBrother" + randomNumber
+    }
+</script>
 <?php
 if ($_GET['action'] == 'newUser') {
     include_once("../components/newUserForm.php");
@@ -87,7 +92,7 @@ if ($_GET['action'] == 'newUser') {
         <tr>
             <th>CORE</th>
             <?php
-            for ($i=6; $i < count($keys); $i++) {
+            for ($i=7; $i < count($keys); $i++) {
                 echo "<th>" . strtoupper($keys[$i]) . "</th>";
             }
             ?>
@@ -97,8 +102,18 @@ if ($_GET['action'] == 'newUser') {
     foreach ($users as $user) {
         echo "<tr>";
         echo "<td>" . $user['name'] . '</td>';
-        echo "<td>" . $user['core'] . '</td>';
-        for ($i=6; $i < count($keys); $i++) {
+        echo "<td>";
+        if ($user['core'] == 0) {
+            echo "<span style='color: red'>No Access</span>";
+        } else if ($user['core'] == 1) {
+            echo "Standard User";
+        } else if ($user['core'] == 2) {
+            echo "<span style='color: orange'>Administrator</span>";
+        } else {
+            echo "ERROR";
+        }
+        echo '</td>';
+        for ($i=7; $i < count($keys); $i++) {
             echo "<td>" . $user[$keys[$i]] . "</td>";
         }
         echo "</tr>";
