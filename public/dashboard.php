@@ -10,24 +10,6 @@ $site->setPage($page);
 
 $helper = new AdminHelper($config);
 
-if ($_POST['action'] == 'resetPassword') {
-    if ($helper->resetUserPassword($_POST['user'], $_POST['password'])) {
-        $_SESSION['success'] = true;
-    } else {
-        $_SESSION['error'][0] = $site->getSQLError();
-    }
-    header("Location: ?");
-    die();
-} else if ($_POST['action'] == 'updateConfig') {
-    if ($helper->updateDynamicConfig($_POST['key'], $_POST['value'])) {
-        $_SESSION['success'] = true;
-    } else {
-        $_SESSION['error'][0] = $site->getSQLError();
-    }
-    header("Location: ?");
-    die();
-}
-
 // Start rendering the content
 ob_start();
 
@@ -46,35 +28,36 @@ if (isset($_GET['page'])): ?>
             echo '<h3 class="mt-5 text-center">' . $loginMessage . '</h3>';
         }
         ?>
-        <h2 class="mt-5 text-center" style="width: 100%">Select a module from the above menu to get started</h2></br>
-        <h5 class="text-center" style="width: 100%">or</h5>
-        <div class="pl-4 pr-4 mb-4">
-            <form method="post">
-                <div class="form-group">
-                    <label for="newUserPassword">Change Your Password</label>
-                    <input name="password" type="text" class="form-control" id="newUserPassword" aria-describedby="emailHelp" placeholder="DikaiaBrother69" required>
-                </div>
-                <input type="hidden" name="user" value="<?php echo $site->userID; ?>">
-                <input type="hidden" name="action" value="resetPassword">
-                <button type="submit" class="btn btn-primary">Update Password</button>
-            </form>
-        </div>
+        <h2 class="mt-5 text-center" style="width: 100%">Select a module to get started:</h2></br>
         <?php
-        if ($site->userCorePem > 1) {
-            ?>
-            <hr/>
-            <div class="pl-4 pr-4 mb-4">
-                <form method="post">
-                    <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Set Home Message</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="value" placeholder="HTML is supported"><?php echo $helper->getDynamicConfig()['HOME_MESSAGE']; ?></textarea>
-                    </div>
-                    <input type="hidden" name="action" value="updateConfig">
-                    <input type="hidden" name="key" value="HOME_MESSAGE">
-                    <button type="submit" class="btn btn-primary">Update Message</button>
-                </form>
-            </div>
-            <?php
+        $data = getCurrentPermissions($config);
+
+        unset($data['id']);
+        unset($data['email']);
+        unset($data['core']);
+        unset($data['name']);
+        unset($data['password']);
+        unset($data['session_token']);
+        unset($data['password_reset']);
+
+
+        foreach ($data as $key => $value) {
+            if ($value > 0) {
+                $handle = $config['dbo']->prepare('SELECT id, name, root_url, external FROM modules WHERE pem_name = ? LIMIT 1');
+                $handle->bindValue(1, $key);
+                $handle->execute();
+                $result = $handle->fetchAll(\PDO::FETCH_ASSOC)[0];
+
+                if (!empty($result)) {
+                    echo '<li>';
+                    if ($result['external']) {
+                        echo '<a class="nav-link" href="' . $result['root_url'] . '?session_token=' . $_SESSION['token'] . '" target="_blank">' . $result['name'] . '</a>';
+                    } else {
+                        echo '<a class="nav-link" href="dashboard.php?page=' . $result['id'] . '">' . $result['name'] . '</a>';
+                    }
+                    echo '</li>';
+                }
+            }
         }
         ?>
     </div>

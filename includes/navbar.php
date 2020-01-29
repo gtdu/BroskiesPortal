@@ -2,19 +2,7 @@
 
 $result = getCurrentPermissions($config);
 
-if (!empty($result)) {
-    $data = $result;
-    unset($data['id']);
-    unset($data['email']);
-    unset($data['name']);
-    unset($data['password']);
-    unset($data['session_token']);
-    unset($data['password_reset']);
-} else if ($data['core'] == 0) {
-    $_SESSION['token'] = NULL;
-    header("Location: index.php");
-    die();
-} else {
+if (empty($result) || $result['core'] == 0) {
     $_SESSION['token'] = NULL;
     header("Location: index.php");
     die();
@@ -32,41 +20,21 @@ if (!empty($result)) {
                 <li class="nav-item active">
                     <a class="nav-link" href="dashboard.php">Home</a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="settings.php">Settings</a>
+                </li>
                 <?php
-
-
-
-if ($data['core'] == 2) {
-    ?>
-    <li class="nav-item active">
-        <a class="nav-link" href="users.php">Manage Users</a>
-    </li>
-    <li class="nav-item active">
-        <a class="nav-link" href="modules.php">Manage Modules</a>
-    </li>
-    <?php
-}
-unset($data['core']);
-
-foreach ($data as $key => $value) {
-    if ($value > 0) {
-        $handle = $config['dbo']->prepare('SELECT id, name, root_url, external FROM modules WHERE pem_name = ? LIMIT 1');
-        $handle->bindValue(1, $key);
-        $handle->execute();
-        $result = $handle->fetchAll(\PDO::FETCH_ASSOC)[0];
-
-        if (!empty($result)) {
-            echo '<li class="nav-item active">';
-            if ($result['external']) {
-                echo '<a class="nav-link" href="' . $result['root_url'] . '?session_token=' . $_SESSION['token'] . '" target="_blank">' . $result['name'] . '</a>';
-            } else {
-                echo '<a class="nav-link" href="dashboard.php?page=' . $result['id'] . '">' . $result['name'] . '</a>';
-            }
-            echo '</li>';
-        }
-    }
-}
-?>
+                if ($data['core'] == 2) {
+                    ?>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="users.php">Manage Users</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="modules.php">Manage Modules</a>
+                    </li>
+                    <?php
+                }
+                ?>
                 <li class="nav-item">
                     <a class="nav-link" href="index.php?action=logout">Logout</a>
                 </li>
