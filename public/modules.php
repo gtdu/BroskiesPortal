@@ -15,23 +15,23 @@ if ($_POST['action'] == 'newModule') {
     if ($helper->createNewModule($_POST['name'], $_POST['url'], $_POST['external'], $_POST['defaultAccess'])) {
         $_SESSION['success'] = true;
     } else {
-        $_SESSION['error'][0] = $site->getSQLError();
+        $_SESSION['error'][0] = getSQLError();
     }
     header("Location: ?");
     die();
-} else if ($_POST['action'] == 'deleteModule') {
+} elseif ($_POST['action'] == 'deleteModule') {
     if ($helper->deleteModule($_POST['module'])) {
         $_SESSION['success'] = true;
     } else {
-        $_SESSION['error'][0] = $site->getSQLError();
+        $_SESSION['error'][0] = getSQLError();
     }
     header("Location: ?");
     die();
-} else if ($_POST['action'] == 'editModule') {
+} elseif ($_POST['action'] == 'editModule') {
     if ($helper->editModule($_POST['module'], $_POST['url'])) {
         $_SESSION['success'] = true;
     } else {
-        $_SESSION['error'][0] = $site->getSQLError();
+        $_SESSION['error'][0] = getSQLError();
     }
     header("Location: ?");
     die();
@@ -54,14 +54,14 @@ include_once("../includes/navbar.php");
     </div>
     <?php
 
+    // Show the correct form
     if ($_GET['action'] == 'deleteModule') {
         include_once("../components/deleteModuleForm.php");
-    } else if ($_GET['action'] == 'newModule') {
+    } elseif ($_GET['action'] == 'newModule') {
         include_once("../components/newModuleForm.php");
-    } else if ($_GET['action'] == 'editModule') {
+    } elseif ($_GET['action'] == 'editModule') {
         include_once("../components/editModuleForm.php");
     }
-
     ?>
 
     <table class="table">
@@ -73,6 +73,7 @@ include_once("../includes/navbar.php");
             </tr>
         </thead>
         <?php
+        // Render the modules
         foreach ($modules as $m) {
             if ($m['id'] != 1) {
                 echo "<tr>";
@@ -85,11 +86,10 @@ include_once("../includes/navbar.php");
         ?>
     </table>
 
+<?php
+// End rendering the content
+$content = ob_get_clean();
+$page->setContent($content);
 
-    <?php
-    // End rendering the content
-    $content = ob_get_clean();
-    $page->setContent($content);
-
-    $site->render();
-    ?>
+$site->render();
+?>

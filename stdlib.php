@@ -13,11 +13,18 @@ function init_site(site $site)
 function logMessage($message)
 {
     global $config;
-
+    // TODO Implement a better loggin system
     print($message);
 }
 
-function getCurrentPermissions($config) {
+function getSQLError()
+{
+    global $config;
+    return $config['dbo']->errorInfo()[2];
+}
+
+function getCurrentPermissions($config)
+{
     $handle = $config['dbo']->prepare('SELECT * FROM users WHERE session_token = ? LIMIT 1');
     $handle->bindValue(1, $_SESSION['token']);
     $handle->execute();
@@ -29,27 +36,13 @@ function devEnv()
     return gethostname() == "Ryans-MBP";
 }
 
-function currentPage($name)
-{
-    echo $name;
-    echo basename(__FILE__, '.php') == $name ? "active" : "";
-}
-
 function removeNonAlphaNumeric($str)
 {
     return preg_replace("/[^A-Za-z0-9 ]/", "", $str);
 }
 
-function str_replace_last($search, $replace, $str)
+function send_email($to, $subject, $message)
 {
-    if (($pos = strrpos($str, $search)) !== false) {
-        $search_length  = strlen($search);
-        $str    = substr_replace($str, $replace, $pos, $search_length);
-    }
-    return $str;
-}
-
-function send_email($to, $subject, $message) {
     global $config;
 
     // Instantiation and passing `true` enables exceptions

@@ -1,5 +1,10 @@
 <?php
 
+/**
+* This is the overarching site class that manages rendering everything
+*
+* @author Ryan Cobelli <ryan.cobelli@gmail.com>
+*/
 class site
 {
     private $headers;
@@ -14,6 +19,11 @@ class site
     public $userCorePem;
     public $userID;
 
+    /**
+    * Setup the site
+    *
+    * @param pageTitle String for HTML <title> tags
+    */
     public function __construct($pageTitle)
     {
         $this->headers = array();
@@ -21,39 +31,60 @@ class site
         $this->title = $pageTitle;
     }
 
+    /**
+    * Begin rendering the site (headers, meta, content, etc.)
+    *
+    */
     public function render()
     {
+        // Render all the headers
         foreach ($this->headers as $header) {
             include $header;
         }
+
+        // Set the page title
         echo '<title>' . $this->title . '</title>';
 
+        // Render any success or error banners
         $this->renderErrors();
         $this->renderSuccess();
 
+        // Render page body
         $this->page->render();
 
+        // Render all the footers
         foreach ($this->footers as $footer) {
             include $footer;
         }
     }
 
+    /**
+    * Public setter for headers
+    */
     public function addHeader($file)
     {
         $this->headers[] = $file;
     }
 
+    /**
+    * Public setter for footers
+    */
     public function addFooter($file)
     {
         $this->footers[] = $file;
     }
 
+    /**
+    * Public setter for page content
+    */
     public function setPage(page $page)
     {
         $this->page = $page;
 
+        // TODO: Fix this breach in best practices
         global $config;
 
+        // Validate the user session if the page requires auth
         if ($this->page->requiresAuth) {
             // Check that a token is set
             if (empty($_SESSION['token'])) {
@@ -68,7 +99,9 @@ class site
             $handle->execute();
             $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
 
+            // Invalid session token
             if (empty($result)) {
+                // Return them to login page
                 session_destroy();
                 header("Location: index.php");
                 die();
@@ -82,6 +115,10 @@ class site
         }
     }
 
+    /**
+    * Loop through each error and create a javascript alert
+    *
+    */
     private function renderErrors()
     {
         $errorOutput = "";
@@ -97,16 +134,15 @@ class site
         unset($_SESSION['error']);
     }
 
+    /**
+    * Check if the action was successful and render a javascript alert
+    *
+    */
     private function renderSuccess()
     {
         if ($_SESSION['success']) {
             echo '<script>alert("Success!")</script>';
             unset($_SESSION['success']);
         }
-    }
-
-    public function getSQLError() {
-        global $config;
-        return $config['dbo']->errorInfo()[2];
     }
 }

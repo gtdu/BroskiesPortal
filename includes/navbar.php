@@ -1,9 +1,18 @@
 <?php
 
+/**
+* This is the navigation bar that is shown to authenticated users within the portal
+*
+* @author Ryan Cobelli <ryan.cobelli@gmail.com>
+*/
+
+// Use the standard lib to get all the users current permissions
 $result = getCurrentPermissions($config);
 
+// Check that the session is valid and that they have permission to use the portal
 if (empty($result) || $result['core'] == 0) {
-    $_SESSION['token'] = NULL;
+    // Invalidate session info and return them to the login page
+    session_destroy();
     header("Location: index.php");
     die();
 }
@@ -24,7 +33,9 @@ if (empty($result) || $result['core'] == 0) {
                     <a class="nav-link" href="settings.php">Settings</a>
                 </li>
                 <?php
-                if ($data['core'] == 2) {
+                // Check if the user is an admin
+                // Admins are able to manage users and modules
+                if ($result['core'] == 2) {
                     ?>
                     <li class="nav-item active">
                         <a class="nav-link" href="users.php">Manage Users</a>

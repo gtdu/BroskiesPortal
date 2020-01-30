@@ -15,31 +15,31 @@ if ($_POST['action'] == 'newUser') {
     if ($helper->newUser($_POST['name'], $_POST['email'], $_POST['password'])) {
         $_SESSION['success'] = true;
     } else {
-        $_SESSION['error'][0] = $site->getSQLError();
+        $_SESSION['error'][0] = getSQLError();
     }
     header("Location: ?");
     die();
-} else if ($_POST['action'] == 'deleteUser') {
+} elseif ($_POST['action'] == 'deleteUser') {
     if ($helper->deleteUser($_POST['user'])) {
         $_SESSION['success'] = true;
     } else {
-        $_SESSION['error'][0] = $site->getSQLError();
+        $_SESSION['error'][0] = getSQLError();
     }
     header("Location: ?");
     die();
-} else if ($_POST['action'] == 'changeCore') {
+} elseif ($_POST['action'] == 'changeCore') {
     if ($helper->setUserPerm($_POST['user'], 'core', $_POST['level'])) {
         $_SESSION['success'] = true;
     } else {
-        $_SESSION['error'][0] = $site->getSQLError();
+        $_SESSION['error'][0] = getSQLError();
     }
     header("Location: ?");
     die();
-} else if ($_POST['action'] == 'changePermission') {
+} elseif ($_POST['action'] == 'changePermission') {
     if ($helper->setUserPerm($_POST['user'], $_POST['module'], $_POST['level'])) {
         $_SESSION['success'] = true;
     } else {
-        $_SESSION['error'][0] = $site->getSQLError();
+        $_SESSION['error'][0] = getSQLError();
     }
     header("Location: ?");
     die();
@@ -63,19 +63,21 @@ include_once("../includes/navbar.php");
         </div>
     </div>
     <script>
+    // Random password generator
     function generatePassword() {
         var randomNumber = Math.floor(Math.random() * 100);
         document.getElementById("newUserPassword").value = "DikaiaBrother" + randomNumber
     }
 </script>
 <?php
+// Render the correct form
 if ($_GET['action'] == 'newUser') {
     include_once("../components/newUserForm.php");
-} else if ($_GET['action'] == 'deleteUser') {
+} elseif ($_GET['action'] == 'deleteUser') {
     include_once("../components/deleteUserForm.php");
-} else if ($_GET['action'] == 'changeCore') {
+} elseif ($_GET['action'] == 'changeCore') {
     include_once("../components/changeCorePemForm.php");
-} else if ($_GET['action'] == 'changePermission') {
+} elseif ($_GET['action'] == 'changePermission') {
     include_once("../components/changePemForm.php");
 }
 ?>
@@ -87,7 +89,7 @@ if ($_GET['action'] == 'newUser') {
         ?>
         <tr>
             <th rowspan="2">Name</th>
-            <th colspan="<?php echo (count($keys) - 5); ?>">Permissions</th>
+            <th colspan="<?php echo(count($keys) - 5); ?>">Permissions</th>
         </tr>
         <tr>
             <th>CORE</th>
@@ -99,15 +101,16 @@ if ($_GET['action'] == 'newUser') {
         </tr>
     </thead>
     <?php
+    // Render users
     foreach ($users as $user) {
         echo "<tr>";
         echo "<td>" . $user['name'] . '</td>';
         echo "<td>";
         if ($user['core'] == 0) {
             echo "<span style='color: red'>No Access</span>";
-        } else if ($user['core'] == 1) {
+        } elseif ($user['core'] == 1) {
             echo "Standard User";
-        } else if ($user['core'] == 2) {
+        } elseif ($user['core'] == 2) {
             echo "<span style='color: orange'>Administrator</span>";
         } else {
             echo "ERROR";

@@ -14,15 +14,15 @@ if ($_POST['action'] == 'resetPassword') {
     if ($helper->resetUserPassword($_POST['user'], $_POST['password'])) {
         $_SESSION['success'] = true;
     } else {
-        $_SESSION['error'][0] = $site->getSQLError();
+        $_SESSION['error'][0] = getSQLError();
     }
     header("Location: ?");
     die();
-} else if ($_POST['action'] == 'updateConfig') {
+} elseif ($_POST['action'] == 'updateConfig') {
     if ($helper->updateDynamicConfig($_POST['key'], $_POST['value'])) {
         $_SESSION['success'] = true;
     } else {
-        $_SESSION['error'][0] = $site->getSQLError();
+        $_SESSION['error'][0] = getSQLError();
     }
     header("Location: ?");
     die();
@@ -47,6 +47,7 @@ include_once("../includes/navbar.php");
             </form>
         </div>
         <?php
+        // Check if they are core admins
         if ($site->userCorePem > 1) {
             ?>
             <hr/>

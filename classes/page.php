@@ -1,5 +1,10 @@
 <?php
 
+/**
+* This is the overarching page class that manages page content
+*
+* @author Ryan Cobelli <ryan.cobelli@gmail.com>
+*/
 class page
 {
     private $content;
@@ -8,11 +13,6 @@ class page
     public function __construct($loginNeeded = false)
     {
         $this->requiresAuth = $loginNeeded;
-    }
-
-    public function __destruct()
-    {
-        // clean up here
     }
 
     public function render()

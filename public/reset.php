@@ -8,7 +8,7 @@ if ($_POST['action'] == "sendCode") {
     $helper->sendPasswordReset($_POST['email']);
     header("Location: index.php");
     die();
-} else if ($_POST['action'] == 'resetPassword') {
+} elseif ($_POST['action'] == 'resetPassword') {
     $helper->resetUserPassword($_POST['code'], $_POST['password']);
     header("Location: index.php");
     die();
@@ -26,10 +26,9 @@ ob_start();
 
 echo '<div class="container mt-3">';
 
-if (isset($_GET['code'])){
+if (isset($_GET['code'])) {
     include_once("../components/useResetCodeForm.php");
-}
-else {
+} else {
     include_once("../components/requestResetCodeForm.php");
 }
 
@@ -40,4 +39,3 @@ $content = ob_get_clean();
 $page->setContent($content);
 
 $site->render();
-?>
