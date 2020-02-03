@@ -43,8 +43,17 @@ if (isset($_GET['page'])): ?>
         unset($data['session_token']);
         unset($data['password_reset']);
 
+        //set modCount for styling purposes
+        $modCount = 0;
+
+        //initialize our module table as not visible aka no modules
+            echo '<table id="modulesTable">';
+
         // Loop through every module
         foreach ($data as $key => $value) {
+            //get module count
+            $modCount += 1;
+
             // Can they access it?
             if ($value > 0) {
                 $handle = $config['dbo']->prepare('SELECT id, name, root_url, external FROM modules WHERE pem_name = ? LIMIT 1');
@@ -54,17 +63,33 @@ if (isset($_GET['page'])): ?>
 
                 // Check if the module actually exists
                 if (!empty($result)) {
-                    echo '<li>';
+
+                    //if it's % 3 we want a new row as we're doing 3 across
+                    if ($modCount % 3 == 0) {
+                        echo '<tr>';
+                    }
+
+                    //create new table entry
+                    echo '<td>';
+
                     // Check if it should open in a new tab or not
                     if ($result['external']) {
                         echo '<a class="nav-link" href="' . $result['root_url'] . '?session_token=' . $_SESSION['token'] . '" target="_blank">' . $result['name'] . '</a>';
                     } else {
                         echo '<a class="nav-link" href="dashboard.php?page=' . $result['id'] . '">' . $result['name'] . '</a>';
                     }
-                    echo '</li>';
+
+                    //close table entry
+                    echo '</td>';
+
+                    //closing check, it's a fast calculation so this is okay
+                    if ($modCount % 3 == 0) {
+                        echo '</tr>';
+                    }
                 }
             }
         }
+        echo '</table>';
         ?>
     </div>
     <?php
