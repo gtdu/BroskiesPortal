@@ -1,6 +1,7 @@
 <?php
 
 use Ramsey\Uuid\Uuid;
+use ICal\ICal;
 
 /**
 * Class to manage all the API related actions
@@ -325,5 +326,29 @@ class AdminHelper
         $handle->bindValue(1, $value);
         $handle->bindValue(2, $key);
         return $handle->execute();
+    }
+
+    public function getUpcomingCalendarEvents() {
+        try {
+            $ical = new ICal();
+            $ical->initUrl($this->config['cal_url'], $username = null, $password = null, $userAgent = null);
+
+            $events = $ical->eventsFromInterval('1 week');
+            $output = '<h4>Events in the next 7 days:</h4></br>';
+
+            foreach ($events as $event) {
+                $dtstart = $ical->iCalDateToDateTime($event->dtstart_array[3]);
+
+                $output .= '<b>' . $dtstart->format('m/d/Y') . "</b> " . $event->summary;
+                if (!empty($event->description)) {
+                    $output .= ": " . $event->description;
+                }
+                $output .=  "</br>";
+            }
+
+            return $output;
+        } catch (\Exception $e) {
+            die($e);
+        }
     }
 }

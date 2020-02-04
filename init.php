@@ -35,7 +35,8 @@ try {
 $config = array(
     'dbo' => $pdo,
     'email_password' => $ini['email_password'],
-    'email_address' => $ini['email_address']
+    'email_address' => $ini['email_address'],
+    'cal_url' => $ini['cal_url']
 );
 
 $errors = array();

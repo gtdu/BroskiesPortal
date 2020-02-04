@@ -29,8 +29,9 @@ if (isset($_GET['page'])):
     if ($loginMessage != null) {
         echo '<h3 class="mt-5 text-center">' . $loginMessage . '</h3><hr/>';
     }
+
+    echo $helper->getUpcomingCalendarEvents();
     ?>
-    <p>Calendar here...</p>
     <hr/>
     <div class="d-flex content">
         <iframe src="<?php echo $helper->getModule($helper->getDynamicConfig()['DEFAULT_MODULE'])['root_url'] . "?session_token=" . $_SESSION['token']; ?>" class="flex-fill"></iframe>

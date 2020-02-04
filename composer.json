@@ -9,6 +9,7 @@
     ],
     "require": {
         "ramsey/uuid": "^3.8",
-        "phpmailer/phpmailer": "^6.1"
+        "phpmailer/phpmailer": "^6.1",
+        "johngrogg/ics-parser": "^2.1"
     }
 }
