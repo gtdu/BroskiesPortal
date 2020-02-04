@@ -38,3 +38,7 @@ CREATE TABLE `config` (
 INSERT INTO `config` (`id`, `key`, `value`)
 VALUES
 	(0, 'HOME_MESSAGE', X'');
+
+INSERT INTO `config` (`id`, `key`, `value`)
+VALUES
+	(1, 'DEFAULT_MODULE', X'33');

@@ -81,6 +81,31 @@ include_once("../includes/navbar.php");
                     <input type="hidden" name="key" value="HOME_MESSAGE">
                     <button type="submit" class="btn btn-primary">Update Message</button>
                 </form>
+            </div><hr/>
+            <div class="pl-4 pr-4 mb-4">
+                <form method="post">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Set Default Module</label>
+                        <select name="value" required id="deleteModuleModule" class="form-control">
+                            <?php
+                            $modules = $helper->getModules();
+                            $current = $helper->getDynamicConfig()['DEFAULT_MODULE'];
+                            foreach ($modules as $m) {
+                                if ($m['id'] != 1) {
+                                    echo "<option value='" . $m['id'] . "'";
+                                    if ($m['id'] == $current) {
+                                        echo " selected";
+                                    }
+                                    echo ">" . $m['name'] . "</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <input type="hidden" name="action" value="updateConfig">
+                    <input type="hidden" name="key" value="DEFAULT_MODULE">
+                    <button type="submit" class="btn btn-primary">Update Default</button>
+                </form>
             </div>
             <?php
         }
