@@ -39,7 +39,7 @@ class APIHelper
         $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
 
         if (!empty($result)) {
-            $handle = $this->conn->prepare('SELECT `' . $result[0]['pem_name'] . '`, name, email, id FROM users WHERE session_token = ? LIMIT 1');
+            $handle = $this->conn->prepare('SELECT `' . $result[0]['pem_name'] . '`, name, email, phone, id FROM users WHERE session_token = ? LIMIT 1');
             $handle->bindValue(1, $session_token);
             $handle->execute();
             $result2 = $handle->fetchAll(\PDO::FETCH_ASSOC);
@@ -48,6 +48,7 @@ class APIHelper
                 $data = array(
                     'name' => $result2[0]['name'],
                     'email' => $result2[0]['email'],
+                    'phone' => $result2[0]['phone'],
                     'level' => $result2[0][$result[0]['pem_name']]
                 );
 

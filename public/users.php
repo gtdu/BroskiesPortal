@@ -12,7 +12,7 @@ $helper = new AdminHelper($config);
 $users = $helper->getUsers();
 
 if ($_POST['action'] == 'newUser') {
-    if ($helper->newUser($_POST['name'], $_POST['email'], $_POST['password'])) {
+    if ($helper->newUser($_POST['name'], $_POST['email'], $_POST['password'], $_POST['phone'])) {
         $_SESSION['success'] = true;
     } else {
         $_SESSION['error'][0] = getSQLError();
@@ -94,7 +94,7 @@ if ($_GET['action'] == 'newUser') {
         <tr>
             <th>CORE</th>
             <?php
-            for ($i=7; $i < count($keys); $i++) {
+            for ($i=8; $i < count($keys); $i++) {
                 echo "<th>" . strtoupper($keys[$i]) . "</th>";
             }
             ?>
@@ -116,7 +116,7 @@ if ($_GET['action'] == 'newUser') {
             echo "ERROR";
         }
         echo '</td>';
-        for ($i=7; $i < count($keys); $i++) {
+        for ($i=8; $i < count($keys); $i++) {
             echo "<td>" . $user[$keys[$i]] . "</td>";
         }
         echo "</tr>";

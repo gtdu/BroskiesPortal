@@ -54,19 +54,24 @@ class AdminHelper
     * @param name The user's name. We recommend Last, First
     * @param eamil The user's email
     * @param password The user's password
+    * @param phone The user's phone number
     */
-    public function newUser($name, $email, $password)
+    public function newUser($name, $email, $password, $phone)
     {
+        // Clean data
+        $phone = removeNonAlphaNumeric($phone);
+
         // Validate data
-        if (empty($name) || empty($email) || empty($password)) {
+        if (empty($name) || empty($email) || empty($password) || empty($phone)) {
             return false;
         }
 
         // Insert into the DB
-        $handle = $this->conn->prepare('INSERT INTO users (name, email, password) VALUES (?, ?, ?)');
+        $handle = $this->conn->prepare('INSERT INTO users (name, email, password, phone) VALUES (?, ?, ?, ?)');
         $handle->bindValue(1, $name);
         $handle->bindValue(2, $email);
         $handle->bindValue(3, password_hash($password, PASSWORD_DEFAULT));
+        $handle->bindValue(4, $phone);
 
         // Check if the operation was successful
         if ($handle->execute()) {
@@ -100,6 +105,29 @@ class AdminHelper
         // Perform operation
         $handle = $this->conn->prepare('UPDATE users SET `' . $perm_field . '` = ? WHERE id = ?');
         $handle->bindValue(1, $perm_level);
+        $handle->bindValue(2, $user_id);
+        return $handle->execute();
+    }
+
+    /**
+    * Update the users phone number
+    *
+    * @param user_id The user's DB ID
+    * @param value The phone number
+    */
+    public function setUserPhone($user_id, $value)
+    {
+        // Clean data
+        $phone = removeNonAlphaNumeric($phone);
+
+        // Validate data
+        if (empty($user_id) || empty($value)) {
+            return false;
+        }
+
+        // Perform operation
+        $handle = $this->conn->prepare('UPDATE users SET `phone` = ? WHERE id = ?');
+        $handle->bindValue(1, $value);
         $handle->bindValue(2, $user_id);
         return $handle->execute();
     }

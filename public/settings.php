@@ -18,7 +18,15 @@ if ($_POST['action'] == 'resetPassword') {
     }
     header("Location: ?");
     die();
-} elseif ($_POST['action'] == 'updateConfig') {
+} else if ($_POST['action'] == 'changePhone') {
+    if ($helper->setUserPhone($_POST['user'], $_POST['phone'])) {
+        $_SESSION['success'] = true;
+    } else {
+        $_SESSION['error'][0] = getSQLError();
+    }
+    header("Location: ?");
+    die();
+} else if ($_POST['action'] == 'updateConfig') {
     if ($helper->updateDynamicConfig($_POST['key'], $_POST['value'])) {
         $_SESSION['success'] = true;
     } else {
@@ -44,6 +52,18 @@ include_once("../includes/navbar.php");
                 <input type="hidden" name="user" value="<?php echo $site->userID; ?>">
                 <input type="hidden" name="action" value="resetPassword">
                 <button type="submit" class="btn btn-primary">Update Password</button>
+            </form>
+        </div>
+        <hr/>
+        <div class="pl-4 pr-4 mb-4 mt-4">
+            <form method="post">
+                <div class="form-group">
+                    <label for="newUserPassword">Change Your Phone Number <i>(digits only)</i></label>
+                    <input name="phone" type="tel" class="form-control" id="newUserPassword" aria-describedby="emailHelp" placeholder="6784206969" value="<?php echo $helper->getUser($site->userID)['phone']; ?>" required pattern='\d{10}'>
+                </div>
+                <input type="hidden" name="user" value="<?php echo $site->userID; ?>">
+                <input type="hidden" name="action" value="changePhone">
+                <button type="submit" class="btn btn-primary">Update Phone Number</button>
             </form>
         </div>
         <?php
