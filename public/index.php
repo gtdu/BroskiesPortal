@@ -4,8 +4,8 @@ include '../init.php';
 $lh = new LoginHelper($config);
 
 // Application logic
-if (!empty($_POST)) {
-    if ($lh->validateLogin($_POST)) {
+if (devEnv() && !empty($_GET['slack_id'])) {
+    if ($lh->validateLogin($_GET['slack_id'])) {
         header("Location: dashboard.php");
     } else {
         $_SESSION['error'][0] = "Incorrect credentials";
