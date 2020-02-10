@@ -1,9 +1,5 @@
 <?php
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-
 function init_site(site $site)
 {
     $site->addHeader("../includes/header.php");
@@ -15,12 +11,6 @@ function logMessage($message)
     global $config;
     // TODO Implement a better loggin system
     print($message);
-}
-
-function getSQLError()
-{
-    global $config;
-    return $config['dbo']->errorInfo()[2];
 }
 
 function getCurrentPermissions($config)

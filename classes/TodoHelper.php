@@ -105,14 +105,14 @@ class TodoHelper extends Helper
         }
     }
 
-    public function updateResource($todo_id, $title, $link, $description)
+    public function updateTodo($todo_id, $title, $link, $description)
     {
         if (empty($todo_id) || empty($title)) {
             $this->error = "All fields are required";
             return false;
         }
 
-        $handle = $this->conn->prepare('UPDATE `resources` SET title = ?, link = ?, description = ? WHERE id = ?');
+        $handle = $this->conn->prepare('UPDATE `todo` SET title = ?, link = ?, description = ? WHERE id = ?');
         $handle->bindValue(1, $title);
         $handle->bindValue(2, $link);
         $handle->bindValue(3, $description);
@@ -139,10 +139,10 @@ class TodoHelper extends Helper
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="width: 20%">Title</th>
+                        <th style="width: 25%">Title</th>
                         <th style="width: 30%">Link</th>
                         <th style="width: 35%">Description</th>
-                        <th style="width: 5%">&nbsp;</th>
+                        <th style="width: 10%">&nbsp;</th>
                     </tr>
                 </thead>
             <?php
