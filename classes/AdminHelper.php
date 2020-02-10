@@ -38,34 +38,30 @@ class AdminHelper extends Helper
     * Create a new user
     *
     * @param name The user's name. We recommend Last, First
-    * @param eamil The user's email
+    * @param eamil The user's slack ID
     * @param password The user's password
     * @param phone The user's phone number
     */
-    public function newUser($name, $email, $password, $phone)
+    public function newUser($name, $slack_id, $password, $phone)
     {
         // Clean data
         $phone = removeNonAlphaNumeric($phone);
 
         // Validate data
-        if (empty($name) || empty($email) || empty($password) || empty($phone)) {
+        if (empty($name) || empty($slack_id) || empty($password) || empty($phone)) {
             $this->error = "All fields are required";
             return false;
         }
 
         // Insert into the DB
-        $handle = $this->conn->prepare('INSERT INTO users (name, email, password, phone) VALUES (?, ?, ?, ?)');
+        $handle = $this->conn->prepare('INSERT INTO users (name, slack_id, password, phone) VALUES (?, ?, ?, ?)');
         $handle->bindValue(1, $name);
-        $handle->bindValue(2, $email);
+        $handle->bindValue(2, $slack_id);
         $handle->bindValue(3, password_hash($password, PASSWORD_DEFAULT));
         $handle->bindValue(4, $phone);
 
         // Check if the operation was successful
         if ($handle->execute()) {
-            // Alert the user that they have an account now
-            $email_message = "Welcome to Broskies Portal!</br></br>Broskies Portal is where you can access a bunch of useful resources all in one place. Please login at: https://broskies.gtdu.org/. Your login is:</br>Email: " . $email . "</br>Password: " . $password . "</br></br>If you have any questions, please respond to this auto-generated email.";
-            send_email($email, 'Welcome To Broskies Portal!', $email_message);
-
             return true;
         } else {
             return false;

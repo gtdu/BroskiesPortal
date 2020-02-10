@@ -2,24 +2,24 @@
     <form method="post">
         <div class="form-group">
             <label for="newUserName">Name</label>
-            <input name="name" type="text" class="form-control" id="newUserName" aria-describedby="emailHelp" placeholder="Doohickey" required>
+            <input name="name" type="text" class="form-control" id="newUserName" aria-describedby="aria" placeholder="Doohickey" required>
         </div>
         <div class="form-group">
-            <label for="newUserEmail">Root URL</label>
-            <input name="root_url" type="text" class="form-control" id="newUserEmail" aria-describedby="emailHelp" placeholder="/modules/doohickey" required>
+            <label for="randomID">Root URL</label>
+            <input name="root_url" type="text" class="form-control" id="randomID" aria-describedby="aria" placeholder="/modules/doohickey" required>
         </div>
         <div class="form-group">
-            <label for="newUserEmail">Icon URL</label>
-            <input name="icon_url" type="text" class="form-control" id="newUserEmail" aria-describedby="emailHelp" placeholder="http://google.com/png.jpg">
+            <label for="randomID">Icon URL</label>
+            <input name="icon_url" type="text" class="form-control" id="randomID" aria-describedby="aria" placeholder="http://google.com/png.jpg">
         </div>
         <div class="form-group">
             <label for="newUserName2">Default Access Level</label>
-            <input name="defaultAccess" type="number" step="1" min="0" value="1" class="form-control" id="newUserName2" aria-describedby="emailHelp" placeholder="1" required>
+            <input name="defaultAccess" type="number" step="1" min="0" value="1" class="form-control" id="newUserName2" aria-describedby="aria" placeholder="1" required>
         </div>
         <div class="form-group">
             <label for="newUserName2">Access Level Names</label>
             <small>Make a comma seperated list of the permission level names with the first value corresponding to 0 and increasing</small>
-            <input name="levelNames" type="text" class="form-control" id="newUserName2" aria-describedby="emailHelp" placeholder="No Access, Pledge, Brother, Officer, Admin">
+            <input name="levelNames" type="text" class="form-control" id="newUserName2" aria-describedby="aria" placeholder="No Access, Pledge, Brother, Officer, Admin">
         </div>
         <div class="form-group">
             <div class="custom-control custom-switch">

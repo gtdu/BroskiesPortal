@@ -14,7 +14,6 @@ class site
     private $errors;
     private $success;
 
-    public $userEmail;
     public $userName;
     public $userCorePem;
     public $userID;
@@ -94,7 +93,7 @@ class site
             }
 
             // Validate session token
-            $handle = $config['dbo']->prepare('SELECT id, name, email, core FROM users WHERE session_token = ?');
+            $handle = $config['dbo']->prepare('SELECT id, name, slack_id, core FROM users WHERE session_token = ?');
             $handle->bindValue(1, $_SESSION['token']);
             $handle->execute();
             $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
@@ -109,7 +108,6 @@ class site
 
             // Store user information
             $this->userName = $result[0]['name'];
-            $this->userEmail = $result[0]['email'];
             $this->userID = $result[0]['id'];
             $this->userCorePem = $result[0]['core'];
         }

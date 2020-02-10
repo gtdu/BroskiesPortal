@@ -12,7 +12,7 @@ $helper = new AdminHelper($config);
 $users = $helper->getUsers();
 
 if ($_POST['action'] == 'newUser') {
-    if ($helper->newUser($_POST['name'], $_POST['email'], $_POST['password'], $_POST['phone'])) {
+    if ($helper->newUser($_POST['name'], $_POST['slack_id'], $_POST['password'], $_POST['phone'])) {
         $_SESSION['success'] = true;
         header("Location: ?");
         die();

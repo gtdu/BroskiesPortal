@@ -31,19 +31,8 @@ ob_start();
 
 ?>
 <div class="container mt-3">
-    <form method="post">
-        <div class="form-group">
-            <label for="loginEmail">Email</label>
-            <input name="email" type="email" class="form-control" id="loginEmail" aria-describedby="emailHelp" placeholder="dude@email.org" required>
-        </div>
-        <div class="form-group">
-            <label for="loginPassword">Password</label>
-            <input name="password" type="password" class="form-control" id="loginPassword" aria-describedby="emailHelp" placeholder="DikiaBrother" required>
-        </div>
-        <input type="hidden" name="action" value="resetPassword">
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-    <div class="mt-3"><a href="reset.php">Forgot Password?</a></div>
+    <h1>GTDU Broskies Portal</h1>
+    <a href="https://slack.com/oauth/authorize?scope=identity.basic&client_id=<?php echo $config['slack_id']; ?>"><img src="https://api.slack.com/img/sign_in_with_slack.png" /></a>
 </div>
 <?php
 

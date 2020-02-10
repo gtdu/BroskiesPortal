@@ -3,19 +3,19 @@
     <form method="post">
         <div class="form-group">
             <label for="newResourceTitle">Title</label>
-            <input name="title" type="text" class="form-control" id="newUserName" aria-describedby="emailHelp" placeholder="Roll Book" required>
+            <input name="title" type="text" class="form-control" id="newUserName" aria-describedby="aria" placeholder="Roll Book" required>
         </div>
         <div class="form-group">
             <label for="newResourceLink">Link</label>
-            <input name="link" type="url" class="form-control" id="newResourceLink" aria-describedby="emailHelp" placeholder="http://drive.google.com" required>
+            <input name="link" type="url" class="form-control" id="newResourceLink" aria-describedby="aria" placeholder="http://drive.google.com" required>
         </div>
         <div class="form-group">
             <label for="newResourcePosition">Position</label>
-            <input name="position" type="text" class="form-control" id="newResourcePosition" aria-describedby="emailHelp" placeholder="Secretary" required>
+            <input name="position" type="text" class="form-control" id="newResourcePosition" aria-describedby="aria" placeholder="Secretary" required>
         </div>
         <div class="form-group">
             <label for="newResourceDescription">Description</label>
-            <input name="description" type="text" class="form-control" id="newResourceDescription" aria-describedby="emailHelp" placeholder="2019-2020 Roll Book">
+            <input name="description" type="text" class="form-control" id="newResourceDescription" aria-describedby="aria" placeholder="2019-2020 Roll Book">
         </div>
         <div class="form-group">
             <label for="changeCoreLevel">Visibility</label>

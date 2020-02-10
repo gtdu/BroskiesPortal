@@ -34,8 +34,8 @@ try {
 
 $config = array(
     'dbo' => $pdo,
-    'email_password' => $ini['email_password'],
-    'email_address' => $ini['email_address'],
+    'slack_id' => $ini['slack_id'],
+    'slack_secret' => $ini['slack_secret'],
     'cal_url' => $ini['cal_url']
 );
 

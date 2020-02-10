@@ -7,6 +7,8 @@ As a fraternity, we had a number of ideas for small applications that would make
 
 This central platform serves as the login and permission management center that all of these small "micro applications" can tap into.
 
+__PLEASE NOTE:__ This was designed to authenticate users using Slack. We generally recommend that the Slack administrator also administer this application. Once you've added a user to the Slack workspace, also add them to this application using their Slack User ID.
+
 ## Adding New Modules
 To add a new module, you must first navigate to the `Manage Modules` tab with a `Administrator` account. From here, you will generate an API key for that module. Now, all a sub-application needs to do is make an API call to `https://YOUR_URL.com/api/` with a POST request for `api_key` (which you just generated) and `session_token`.
 
@@ -40,9 +42,7 @@ If a user is designated as a `Administrator`, then they will also have access to
 ## Setup
     1. Rename `example config.ini` to `config.ini`
     2. Update the variables in `config.ini`
-       1. The email credentials are what will be used to send the welcome & password reset emails
     3. Run `setup.sql` to create the database and default data
-    4. The default login will be `admin@email.com` and `1234`
 
 ## Todo
   - Allow modules to adjust permissions themselves
