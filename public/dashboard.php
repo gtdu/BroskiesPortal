@@ -19,7 +19,7 @@ include_once("../includes/navbar.php");
 if (isset($_GET['page'])):
 ?>
 <div class="d-flex content container">
-    <iframe src="<?php echo $helper->getModule($_GET['page'])['root_url'] . "?session_token=" . $_SESSION['token']; ?>" class="flex-fill"></iframe>
+    <iframe src="<?php echo $helper->getModuleByID($_GET['page'])['root_url'] . "?session_token=" . $_SESSION['token']; ?>" class="flex-fill"></iframe>
 </div>
 <?php else: ?>
 <div class="content container">
