@@ -61,6 +61,7 @@ include_once("../includes/navbar.php");
 
 ?>
 <div class="container pt-3">
+    <h1 class="mt-2">Todos</h1>
 <?php
 
 if ($site->userCorePem > 1) {
@@ -73,22 +74,13 @@ if ($site->userCorePem > 1) {
     } elseif ($_GET['action'] == 'edit') {
         $item = $helper->getTodoByID($_GET['id']);
         include_once("../components/changeTodoForm.php");
-    }
-}
-
-?>
-<h1 class="mt-2">Todos</h1>
-<?php
-
-if ($site->userCorePem > 1) {
-    if ($_GET['viewAll'] == "true") {
-        echo '<a href="?viewAll=false" role="button" class="btn btn-outline-secondary mb-3 mr-3">View Pending</a>';
     } else {
-        echo '<a href="?viewAll=true" role="button" class="btn btn-outline-secondary mb-3 mr-3">View All</a>';
-    }
-
-    if (empty($_GET['action'])) {
-        echo '<a href="?action=create" role="button" class="btn btn-success mb-3">Create Todo</a>';
+        echo '<a href="?action=create" role="button" class="btn btn-success mb-3 mr-3">Create Todo</a>';
+        if ($_GET['viewAll'] == "true") {
+            echo '<a href="?viewAll=false" role="button" class="btn btn-outline-secondary mb-3">View Pending</a>';
+        } else {
+            echo '<a href="?viewAll=true" role="button" class="btn btn-outline-secondary mb-3">View All</a>';
+        }
     }
 }
 

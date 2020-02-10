@@ -26,7 +26,7 @@ class AdminHelper extends Helper
     *
     * @param id The users DB ID
     */
-    public function getUser($id)
+    public function getUserByID($id)
     {
         $handle = $this->conn->prepare('SELECT * FROM users WHERE id = ? LIMIT 1');
         $handle->bindValue(1, $id);
@@ -49,6 +49,7 @@ class AdminHelper extends Helper
 
         // Validate data
         if (empty($name) || empty($email) || empty($password) || empty($phone)) {
+            $this->error = "All fields are required";
             return false;
         }
 
@@ -81,7 +82,8 @@ class AdminHelper extends Helper
     public function setUserPerm($user_id, $perm_field, $perm_level)
     {
         // Validate data
-        if (empty($user_id) || empty($perm_field) || empty($perm_level)) {
+        if (empty($user_id) || empty($perm_field)) {
+            $this->error = "All fields are required";
             return false;
         }
 
@@ -108,6 +110,7 @@ class AdminHelper extends Helper
 
         // Validate data
         if (empty($user_id) || empty($value)) {
+            $this->error = "All fields are required";
             return false;
         }
 
@@ -128,6 +131,7 @@ class AdminHelper extends Helper
     {
         // Validate data
         if (empty($user_id) || empty($new_password)) {
+            $this->error = "All fields are required";
             return false;
         }
 
@@ -147,6 +151,7 @@ class AdminHelper extends Helper
     {
         // Validate data
         if (empty($user_id)) {
+            $this->error = "All fields are required";
             return false;
         }
 
@@ -163,7 +168,10 @@ class AdminHelper extends Helper
     public function getModules()
     {
         $handle = $this->conn->prepare('SELECT * FROM modules');
-        $handle->execute();
+        if (!$handle->execute()) {
+            $this->error = $this->conn->errorInfo()[2];
+            return false;
+        }
         return $handle->fetchAll(\PDO::FETCH_ASSOC);
     }
 
@@ -172,11 +180,14 @@ class AdminHelper extends Helper
     *
     * @param id Module DB ID
     */
-    public function getModule($id)
+    public function getModuleByID($id)
     {
         $handle = $this->conn->prepare('SELECT * FROM modules WHERE id = ? LIMIT 1');
         $handle->bindValue(1, $id);
-        $handle->execute();
+        if (!$handle->execute()) {
+            $this->error = $this->conn->errorInfo()[2];
+            return false;
+        }
         return $handle->fetchAll(\PDO::FETCH_ASSOC)[0];
     }
 
@@ -187,11 +198,14 @@ class AdminHelper extends Helper
     * @param root_url The URL of the module's code
     * @param external Should the module open in a new tab
     * @param defaultAccess Default access level
+    * @param icon_url The URL of the module's icon
+    * @param levelNames The different level names
     */
-    public function createNewModule($module_name, $root_url, $external, $defaultAccess)
+    public function createNewModule($module_name, $root_url, $external, $defaultAccess, $icon_url, $levelNames)
     {
         // Validate data
         if (empty($module_name) || empty($root_url)) {
+            $this->error = "All fields are required";
             return false;
         }
 
@@ -207,12 +221,14 @@ class AdminHelper extends Helper
         $api_key = Uuid::uuid4()->toString();
 
         // Perform operations
-        $handle = $this->conn->prepare('INSERT INTO modules (api_token, name, pem_name, root_url, external) VALUES (?, ?, ?, ?, ?)');
+        $handle = $this->conn->prepare('INSERT INTO modules (api_token, name, pem_name, root_url, external, icon_url, levelNames) VALUES (?, ?, ?, ?, ?, ?, ?)');
         $handle->bindValue(1, $api_key);
         $handle->bindValue(2, $module_name);
         $handle->bindValue(3, $perm_name);
         $handle->bindValue(4, $root_url);
         $handle->bindValue(5, $external);
+        $handle->bindValue(6, $icon_url);
+        $handle->bindValue(7, $levelNames);
         $handle->execute();
 
         $handle = $this->conn->prepare('ALTER TABLE `users` ADD `' . $perm_name . '` INT(1) NOT NULL DEFAULT ?');
@@ -225,18 +241,32 @@ class AdminHelper extends Helper
     *
     * @param module_id The modules's DB ID
     * @param root_url The URL of the module's code
+    * @param external If the module should open in a new tab or not
+    * @param icon_url The URL of the module's icon
+    * @param levelNames The different level names
     */
-    public function editModule($module_id, $root_url)
+    public function editModule($module_id, $root_url, $external, $icon_url, $levelNames)
     {
         // Validate data
         if (empty($module_id) || empty($root_url)) {
+            $this->error = "All fields are required";
             return false;
         }
 
+        // Clean data
+        if ($external == "on") {
+            $external = 1;
+        } else {
+            $external = 0;
+        }
+
         // Perform the operation
-        $handle = $this->conn->prepare('UPDATE modules SET root_url = ? WHERE id = ?');
+        $handle = $this->conn->prepare('UPDATE modules SET root_url = ?, external = ?, icon_url = ?, levelNames = ? WHERE id = ?');
         $handle->bindValue(1, $root_url);
-        $handle->bindValue(2, $module_id);
+        $handle->bindValue(2, $external);
+        $handle->bindValue(3, $icon_url);
+        $handle->bindValue(4, $levelNames);
+        $handle->bindValue(5, $module_id);
         return $handle->execute();
     }
 
@@ -249,13 +279,17 @@ class AdminHelper extends Helper
     {
         // Validate data
         if (empty($module_id)) {
+            $this->error = "All fields are required";
             return false;
         }
 
         // Get the technical permission name
         $handle = $this->conn->prepare('SELECT pem_name FROM modules WHERE id = ? LIMIT 1');
         $handle->bindValue(1, $module_id);
-        $handle->execute();
+        if (!$handle->execute()) {
+            $this->error = $this->conn->errorInfo()[2];
+            return false;
+        }
         $pem_name = $handle->fetchAll(\PDO::FETCH_ASSOC)[0]['pem_name'];
 
         // Remove the permission from the users table
@@ -279,7 +313,10 @@ class AdminHelper extends Helper
     {
         // Pull the data
         $handle = $this->conn->prepare('SELECT * FROM config ORDER BY id');
-        $handle->execute();
+        if (!$handle->execute()) {
+            $this->error = $this->conn->errorInfo()[2];
+            return false;
+        }
         $results = $handle->fetchAll(\PDO::FETCH_ASSOC);
 
         // Format it
@@ -303,6 +340,7 @@ class AdminHelper extends Helper
     {
         // Validate data
         if (empty($key)) {
+            $this->error = "All fields are required";
             return false;
         }
 

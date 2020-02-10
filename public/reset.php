@@ -5,13 +5,25 @@ $helper = new LoginHelper($config);
 
 // Application logic
 if ($_POST['action'] == "sendCode") {
-    $helper->sendPasswordReset($_POST['email']);
-    header("Location: index.php");
-    die();
+    if ($helper->sendPasswordReset($_POST['email'])) {
+        $_SESSION['success'] = true;
+        header("Location: ?");
+        die();
+    } else {
+        $_SESSION['error'][0] = $helper->getErrorMessage();
+        header("Location: ?");
+        die();
+    }
 } elseif ($_POST['action'] == 'resetPassword') {
-    $helper->resetUserPassword($_POST['code'], $_POST['password']);
-    header("Location: index.php");
-    die();
+    if ($helper->resetUserPassword($_POST['code'], $_POST['password'])) {
+        $_SESSION['success'] = true;
+        header("Location: index.php");
+        die();
+    else {
+        $_SESSION['error'][0] = $helper->getErrorMessage();
+        header("Location: ?");
+        die();
+    }
 }
 
 // Site/page boilerplate

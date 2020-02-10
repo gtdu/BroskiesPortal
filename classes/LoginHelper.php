@@ -19,6 +19,7 @@ class LoginHelper extends Helper
     {
         // Check if required parameters are provided
         if (empty($data['email']) || empty($data['password'])) {
+            $this->error = "All fields are required";
             return false;
         }
 
@@ -58,7 +59,11 @@ class LoginHelper extends Helper
     {
         $handle = $this->conn->prepare('UPDATE users SET session_token = NULL WHERE session_token = ?');
         $handle->bindValue(1, $_SESSION['token']);
-        $handle->execute();
+        if (!$handle->execute()) {
+            $this->error = $this->conn->errorInfo()[2];
+            return false;
+        }
+
         $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
 
         if (!empty($result)) {
@@ -81,7 +86,10 @@ class LoginHelper extends Helper
         // Check if the email exists as a user
         $handle = $this->conn->prepare('SELECT id FROM users WHERE email = ? LIMIT 1');
         $handle->bindValue(1, $email);
-        $handle->execute();
+        if (!$handle->execute()) {
+            $this->error = $this->conn->errorInfo()[2];
+            return false;
+        }
         $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
 
         // Stop if the user doen't exist

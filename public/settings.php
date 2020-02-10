@@ -13,27 +13,33 @@ $helper = new AdminHelper($config);
 if ($_POST['action'] == 'resetPassword') {
     if ($helper->resetUserPassword($_POST['user'], $_POST['password'])) {
         $_SESSION['success'] = true;
+        header("Location: ?");
+        die();
     } else {
-        $_SESSION['error'][0] = getSQLError();
+        $_SESSION['error'][0] = $helper->getErrorMessage();
+        header("Location: ?");
+        die();
     }
-    header("Location: ?");
-    die();
 } else if ($_POST['action'] == 'changePhone') {
     if ($helper->setUserPhone($_POST['user'], $_POST['phone'])) {
         $_SESSION['success'] = true;
+        header("Location: ?");
+        die();
     } else {
-        $_SESSION['error'][0] = getSQLError();
+        $_SESSION['error'][0] = $helper->getErrorMessage();
+        header("Location: ?");
+        die();
     }
-    header("Location: ?");
-    die();
 } else if ($_POST['action'] == 'updateConfig') {
     if ($helper->updateDynamicConfig($_POST['key'], $_POST['value'])) {
         $_SESSION['success'] = true;
+        header("Location: ?");
+        die();
     } else {
-        $_SESSION['error'][0] = getSQLError();
+        $_SESSION['error'][0] = $helper->getErrorMessage();
+        header("Location: ?");
+        die();
     }
-    header("Location: ?");
-    die();
 }
 
 // Start rendering the content
@@ -59,7 +65,7 @@ include_once("../includes/navbar.php");
             <form method="post">
                 <div class="form-group">
                     <label for="newUserPassword">Change Your Phone Number <i>(digits only)</i></label>
-                    <input name="phone" type="tel" class="form-control" id="newUserPassword" aria-describedby="emailHelp" placeholder="6784206969" value="<?php echo $helper->getUser($site->userID)['phone']; ?>" required pattern='\d{10}'>
+                    <input name="phone" type="tel" class="form-control" id="newUserPassword" aria-describedby="emailHelp" placeholder="6784206969" value="<?php echo $helper->getUserByID($site->userID)['phone']; ?>" required pattern='\d{10}'>
                 </div>
                 <input type="hidden" name="user" value="<?php echo $site->userID; ?>">
                 <input type="hidden" name="action" value="changePhone">

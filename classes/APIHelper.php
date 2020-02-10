@@ -20,6 +20,11 @@ class APIHelper extends Helper
     */
     public function performAuth($api_key, $session_token)
     {
+        if (empty($api_key) || empty($session_token)) {
+            $this->error = "All fields are required";
+            return false;
+        }
+
         $handle = $this->conn->prepare('SELECT pem_name FROM modules WHERE api_token = ? LIMIT 1');
         $handle->bindValue(1, $api_key);
         $handle->execute();

@@ -51,6 +51,7 @@ include_once("../includes/navbar.php");
 
 ?>
 <div class="container pt-3">
+<h1 class="mt-2">Resources</h1>
 <?php
 
 if ($site->userCorePem > 1) {
@@ -64,12 +65,11 @@ if ($site->userCorePem > 1) {
         $item = $helper->getResourceByID($_GET['id']);
         include_once("../components/changeResourceForm.php");
     } else {
-        echo '<a href="?action=create" role="button" class="float-right btn btn-success mb-3">Create Resource</a>';
+        echo '<a href="?action=create" role="button" class="btn btn-success mb-3">Create Resource</a>';
     }
 }
 
 ?>
-<h1 class="mt-2">Resources</h1>
 <?php
 
 $helper->renderResources($site->userCorePem);

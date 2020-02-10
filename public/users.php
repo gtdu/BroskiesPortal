@@ -14,35 +14,33 @@ $users = $helper->getUsers();
 if ($_POST['action'] == 'newUser') {
     if ($helper->newUser($_POST['name'], $_POST['email'], $_POST['password'], $_POST['phone'])) {
         $_SESSION['success'] = true;
+        header("Location: ?");
+        die();
     } else {
-        $_SESSION['error'][0] = getSQLError();
+        $_SESSION['error'][0] = $helper->getErrorMessage();
+        header("Location: ?");
+        die();
     }
-    header("Location: ?");
-    die();
 } elseif ($_POST['action'] == 'deleteUser') {
-    if ($helper->deleteUser($_POST['user'])) {
+    if ($helper->deleteUser($_POST['user_id'])) {
         $_SESSION['success'] = true;
+        header("Location: ?");
+        die();
     } else {
-        $_SESSION['error'][0] = getSQLError();
+        $_SESSION['error'][0] = $helper->getErrorMessage();
+        header("Location: ?");
+        die();
     }
-    header("Location: ?");
-    die();
-} elseif ($_POST['action'] == 'changeCore') {
-    if ($helper->setUserPerm($_POST['user'], 'core', $_POST['level'])) {
-        $_SESSION['success'] = true;
-    } else {
-        $_SESSION['error'][0] = getSQLError();
-    }
-    header("Location: ?");
-    die();
 } elseif ($_POST['action'] == 'changePermission') {
-    if ($helper->setUserPerm($_POST['user'], $_POST['module'], $_POST['level'])) {
+    if ($helper->setUserPerm($_POST['user_id'], $_POST['module'], $_POST['level'])) {
         $_SESSION['success'] = true;
+        header("Location: ?");
+        die();
     } else {
-        $_SESSION['error'][0] = getSQLError();
+        $_SESSION['error'][0] = $helper->getErrorMessage();
+        header("Location: ?");
+        die();
     }
-    header("Location: ?");
-    die();
 }
 
 // Start rendering the content
@@ -54,34 +52,21 @@ include_once("../includes/navbar.php");
 ?>
 <div class="container">
     <h1 class="mt-2">Manage Users</h1>
-    <div class="d-flex mt-3 mb-3">
-        <div class="btn-group flex-fill" role="group" aria-label="Basic example">
-            <a href="?action=newUser" class="btn btn-warning">Create New User</a>
-            <a href="?action=deleteUser" class="btn btn-warning">Delete User</a>
-            <a href='?action=changeCore' class="btn btn-warning">Change Core Permission Level</a>
-            <a href='?action=changePermission' class="btn btn-warning">Change Module Permission Level</a>
-        </div>
-    </div>
-    <script>
-    // Random password generator
-    function generatePassword() {
-        var randomNumber = Math.floor(Math.random() * 100);
-        document.getElementById("newUserPassword").value = "DikaiaBrother" + randomNumber
-    }
-</script>
 <?php
 // Render the correct form
-if ($_GET['action'] == 'newUser') {
+if ($_GET['action'] == 'create') {
     include_once("../components/newUserForm.php");
-} elseif ($_GET['action'] == 'deleteUser') {
+} elseif ($_GET['action'] == 'delete') {
+    $item = $helper->getUserByID($_GET['id']);
     include_once("../components/deleteUserForm.php");
-} elseif ($_GET['action'] == 'changeCore') {
-    include_once("../components/changeCorePemForm.php");
-} elseif ($_GET['action'] == 'changePermission') {
+} elseif ($_GET['action'] == 'edit') {
+    $item = $helper->getUserByID($_GET['id']);
     include_once("../components/changePemForm.php");
+} else {
+    echo '<a href="?action=create" role="button" class="btn btn-success mb-3">Create User</a>';
 }
 ?>
-
+<div style="overflow-x: scroll;">
 <table class="table">
     <thead class="thead-dark">
         <?php
@@ -89,22 +74,28 @@ if ($_GET['action'] == 'newUser') {
         ?>
         <tr>
             <th rowspan="2">Name</th>
+            <th rowspan="2">&nbsp;</th>
             <th colspan="<?php echo(count($keys) - 5); ?>">Permissions</th>
         </tr>
         <tr>
-            <th>CORE</th>
+            <th style='min-width: 125px;'>CORE</th>
             <?php
             for ($i=8; $i < count($keys); $i++) {
-                echo "<th>" . strtoupper($keys[$i]) . "</th>";
+                echo "<th style='min-width: 125px;'>" . strtoupper($keys[$i]) . "</th>";
             }
             ?>
         </tr>
     </thead>
     <?php
     // Render users
+    $modules = $helper->getModules();
+
     foreach ($users as $user) {
+        $levels = explode(",", $modules[$i - 8]['levelNames']);
+
         echo "<tr>";
         echo "<td>" . $user['name'] . '</td>';
+        echo '<td><a href="users.php?action=delete&id=' . $user['id'] . '"><img src="../resources/delete.png" class="icon"></a><a href="users.php?action=edit&id=' . $user['id'] . '"><img src="../resources/edit.png" class="icon"></a></td>';
         echo "<td>";
         if ($user['core'] == 0) {
             echo "<span style='color: red'>No Access</span>";
@@ -119,13 +110,31 @@ if ($_GET['action'] == 'newUser') {
         }
         echo '</td>';
         for ($i=8; $i < count($keys); $i++) {
-            echo "<td>" . $user[$keys[$i]] . "</td>";
+            echo "<td>";
+            if ($user[$keys[$i]] == 0) {
+                echo "<span style='color: red'>";
+            } elseif ($user[$keys[$i]] == 1) {
+                echo "<span>";
+            } elseif ($user[$keys[$i]] == 2) {
+                echo "<span style='color: blue'>";
+            } elseif ($user[$keys[$i]] >= 3) {
+                echo "<span style='color: orange'>";
+            }
+
+            if (count($levels) < $user[$keys[$i]]) {
+                echo "<b>" . $user[$keys[$i]] . "</b>";
+            } else {
+                echo $levels[$user[$keys[$i]]];
+            }
+
+            echo "</span></td>";
         }
         echo "</tr>";
     }
 
     ?>
 </table>
+</div>
 </div>
 
 
