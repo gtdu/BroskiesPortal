@@ -23,19 +23,7 @@ if (isset($_GET['page'])):
 </div>
 <?php else: ?>
 <div class="content container">
-    <?php
-    // Render dynamic login message
-    $loginMessage = $helper->getDynamicConfig()['HOME_MESSAGE'];
-    if ($loginMessage != null) {
-        echo '<h3 class="mt-5 text-center">' . $loginMessage . '</h3><hr/>';
-    }
-
-    echo $helper->getUpcomingCalendarEvents();
-    ?>
-    <hr/>
-    <div class="d-flex content">
-        <iframe src="<?php echo $helper->getModule($helper->getDynamicConfig()['DEFAULT_MODULE'])['root_url'] . "?session_token=" . $_SESSION['token']; ?>" class="flex-fill"></iframe>
-    </div>
+    <?php include_once("../includes/homePage.php"); ?>
 </div>
 <?php
 endif;

@@ -14,7 +14,8 @@
             <label for="changeCoreLevel">User</label>
             <select name="level" required id="changeCoreLevel" class="form-control">
                 <option value="1">Standard Brother</option>
-                <option value="2">Administrator</option>
+                <option value="2">MEC Officer</option>
+                <option value="3">EC Officer</option>
             </select>
         </div>
         <input type="hidden" name="action" value="changeCore">

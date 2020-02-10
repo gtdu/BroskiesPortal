@@ -111,7 +111,9 @@ if ($_GET['action'] == 'newUser') {
         } elseif ($user['core'] == 1) {
             echo "Standard User";
         } elseif ($user['core'] == 2) {
-            echo "<span style='color: orange'>Administrator</span>";
+            echo "<span style='color: blue'>MEC Officer</span>";
+        } elseif ($user['core'] == 3) {
+            echo "<span style='color: orange'>EC Officer</span>";
         } else {
             echo "ERROR";
         }

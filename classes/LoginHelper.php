@@ -7,22 +7,8 @@ use Ramsey\Uuid\Uuid;
 *
 * @author Ryan Cobelli <ryan.cobelli@gmail.com>
 */
-class LoginHelper
+class LoginHelper extends Helper
 {
-    private $config;
-    private $conn;
-
-    /**
-    * Setup the helper
-    *
-    * @param input The config array (contains config info, DB object, etc.)
-    */
-    public function __construct($input)
-    {
-        $this->config = $input;
-        $this->conn = $input['dbo'];
-    }
-
     /**
     * Validate login credentials
     *
@@ -130,7 +116,7 @@ class LoginHelper
         $handle = $this->conn->prepare('UPDATE users SET password = ?, password_reset = NULL WHERE password_reset = ?');
         $handle->bindValue(1, password_hash($new_password, PASSWORD_DEFAULT));
         $handle->bindValue(2, $reset_code);
-        
+
         // Return if the operation was successful
         return $handle->execute();
     }

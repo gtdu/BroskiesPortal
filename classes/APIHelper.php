@@ -5,24 +5,10 @@
 *
 * @author Ryan Cobelli <ryan.cobelli@gmail.com>
 */
-class APIHelper
+class APIHelper extends Helper
 {
-    private $config;
-    private $conn;
     private $data;
-    private $errorCode;
-
-    /**
-    * Setup the helper
-    *
-    * @param input The config array (contains config info, DB object, etc.)
-    */
-    public function __construct($input)
-    {
-        $this->config = $input;
-        $this->conn = $input['dbo'];
-        $this->errorCode = 0; // No error
-    }
+    private $errorCode = 0;
 
     /**
     * Check if the credentials provided are valid and save the resulting query or error info

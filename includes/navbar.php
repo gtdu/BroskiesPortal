@@ -29,6 +29,12 @@ if (empty($result) || $result['core'] == 0) {
                 <li class="nav-item active">
                     <a class="nav-link" href="dashboard.php"><img src="../resources/home.png" title="Home" class="icon"></a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="resources.php">Resources</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="todo.php">Todo</a>
+                </li>
                 <?php
                 // Pull all permission data
                 $data = getCurrentPermissions($config);
@@ -69,7 +75,7 @@ if (empty($result) || $result['core'] == 0) {
                 <?php
                 // Check if the user is an admin
                 // Admins are able to manage users and modules
-                if ($result['core'] == 2) {
+                if ($result['core'] > 2) {
                     ?>
                     <li class="nav-item active">
                         <a class="nav-link" href="users.php">Manage Users</a>
