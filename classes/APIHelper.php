@@ -9,6 +9,7 @@ class APIHelper extends Helper
 {
     private $data;
     private $errorCode = 0;
+    private $level = 0;
 
     /**
     * Check if the credentials provided are valid and save the resulting query or error info
@@ -25,7 +26,7 @@ class APIHelper extends Helper
         $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
 
         if (!empty($result)) {
-            $handle = $this->conn->prepare('SELECT `' . $result[0]['pem_name'] . '`, name, email, phone, id FROM users WHERE session_token = ? LIMIT 1');
+            $handle = $this->conn->prepare('SELECT `' . $result[0]['pem_name'] . '`, name, email, phone, id, core FROM users WHERE session_token = ? LIMIT 1');
             $handle->bindValue(1, $session_token);
             $handle->execute();
             $result2 = $handle->fetchAll(\PDO::FETCH_ASSOC);
@@ -37,6 +38,8 @@ class APIHelper extends Helper
                     'phone' => $result2[0]['phone'],
                     'level' => $result2[0][$result[0]['pem_name']]
                 );
+
+                $this->level = $result2[0]['core'];
 
                 $this->data = $data;
                 return true;
@@ -68,5 +71,27 @@ class APIHelper extends Helper
     public function getErrorCode()
     {
         return $this->errorCode;
+    }
+
+    /**
+    * Return the data queries in performAuth
+    *
+    * @return Integer The user's core level
+    */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+    * Return the data queries in performAuth
+    *
+    * @return Array The data of all the brothers
+    */
+    public function getAllData()
+    {
+        $handle = $this->conn->prepare('SELECT id, name, email, phone FROM users');
+        $handle->execute();
+        return $handle->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
