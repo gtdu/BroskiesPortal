@@ -84,7 +84,7 @@ if ($site->userCorePem > 1) {
     }
 }
 
-$helper->renderTodos($site->userID, $_GET['viewAll'] == "true");
+$helper->renderTodos($site->userID, $site->userCorePem, $_GET['viewAll'] == "true");
 
 echo "</div>";
 

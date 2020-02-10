@@ -125,7 +125,7 @@ class TodoHelper extends Helper
         }
     }
 
-    public function renderTodos($user_id, $all = false) {
+    public function renderTodos($user_id, $user_level, $all = false) {
         if ($all) {
             $todos = $this->getTodos($user_id);
         } else {
