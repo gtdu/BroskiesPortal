@@ -7,3 +7,6 @@
 [submodule "modules/BroskiesPortal-LatePlate"]
 	path = modules/BroskiesPortal-LatePlate
 	url = https://github.com/gtdu/BroskiesPortal-LatePlate.git
+[submodule "modules/BroskiesPortal-Policy"]
+	path = modules/BroskiesPortal-Policy
+	url = https://github.com/gtdu/BroskiesPortal-Policy.git
