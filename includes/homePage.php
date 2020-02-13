@@ -33,4 +33,14 @@ if ($default_id != -1) {
     $resourcesHelper = new ResourcesHelper($config);
     $resourcesHelper->renderResources($site->userCorePem);
 }
-?>
+
+// If they want to cause chaos and its lucky, it tell's somebody to drink
+if ($_GET['chaos'] == 'true' && rand(0,5) == 1) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    // UCQ6ZGDNZ = Nilabh
+    // C30NXEX7U = Random
+    curl_setopt($ch, CURLOPT_URL, "https://slack.com/api/chat.postMessage?token=" . $ini['slack_token'] . "&channel=C30NXEX7U&text=Drink%20One%20<@UCQ6ZGDNZ>");
+    curl_exec($ch);
+    curl_close($ch);
+}
