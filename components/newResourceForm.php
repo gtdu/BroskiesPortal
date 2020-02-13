@@ -20,7 +20,8 @@
         <div class="form-group">
             <label for="changeCoreLevel">Visibility</label>
             <select name="visibility" required id="changeCoreLevel" class="form-control">
-                <option value="1">Standard Brother</option>
+                <option value="1">Pledge</option>
+                <option value="2">Brother</option>
                 <option value="2">MEC Officer</option>
                 <option value="3">EC Officer</option>
             </select>

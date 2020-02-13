@@ -73,15 +73,15 @@ if ($_GET['action'] == 'create') {
         $keys = array_keys($users[0]);
         ?>
         <tr>
-            <th rowspan="2">Name</th>
+            <th rowspan="2" style='min-width: 175px;'>Name</th>
             <th rowspan="2">&nbsp;</th>
             <th colspan="<?php echo(count($keys) - 5); ?>">Permissions</th>
         </tr>
         <tr>
             <th style='min-width: 125px;'>CORE</th>
             <?php
-            for ($i=8; $i < count($keys); $i++) {
-                echo "<th style='min-width: 125px;'>" . strtoupper($keys[$i]) . "</th>";
+            for ($i=6; $i < count($keys); $i++) {
+                echo "<th style='min-width: 145px;'>" . strtoupper($keys[$i]) . "</th>";
             }
             ?>
         </tr>
@@ -91,8 +91,6 @@ if ($_GET['action'] == 'create') {
     $modules = $helper->getModules();
 
     foreach ($users as $user) {
-        $levels = explode(",", $modules[$i - 8]['levelNames']);
-
         echo "<tr>";
         echo "<td>" . $user['name'] . '</td>';
         echo '<td><a href="users.php?action=delete&id=' . $user['id'] . '"><img src="../resources/delete.png" class="icon"></a><a href="users.php?action=edit&id=' . $user['id'] . '"><img src="../resources/edit.png" class="icon"></a></td>';
@@ -100,16 +98,20 @@ if ($_GET['action'] == 'create') {
         if ($user['core'] == 0) {
             echo "<span style='color: red'>No Access</span>";
         } elseif ($user['core'] == 1) {
-            echo "Standard User";
+            echo "Pledge";
         } elseif ($user['core'] == 2) {
-            echo "<span style='color: blue'>MEC Officer</span>";
+            echo "Brother";
         } elseif ($user['core'] == 3) {
+            echo "<span style='color: blue'>MEC Officer</span>";
+        } elseif ($user['core'] == 4) {
             echo "<span style='color: orange'>EC Officer</span>";
         } else {
             echo "ERROR";
         }
         echo '</td>';
-        for ($i=8; $i < count($keys); $i++) {
+        for ($i=6; $i < count($keys); $i++) {
+            $levels = explode(",", $modules[$i - 5]['levelNames']);
+
             echo "<td>";
             if ($user[$keys[$i]] == 0) {
                 echo "<span style='color: red'>";

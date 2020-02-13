@@ -20,7 +20,8 @@
         <div class="form-group">
             <label for="changeCoreLevel">Visibility</label>
             <select name="visibility" required id="changeCoreLevel" class="form-control" required>
-                <option value="1" <?php if ($item['visibility'] == 1){ echo "selected"; }?>>Standard Brother</option>
+                <option value="1" <?php if ($item['visibility'] == 1){ echo "selected"; }?>>Pledge</option>
+                <option value="1" <?php if ($item['visibility'] == 2){ echo "selected"; }?>>Brother</option>
                 <option value="2" <?php if ($item['visibility'] == 2){ echo "selected"; }?>>MEC Officer</option>
                 <option value="3" <?php if ($item['visibility'] == 3){ echo "selected"; }?>>EC Officer</option>
             </select>
