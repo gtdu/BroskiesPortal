@@ -12,7 +12,7 @@ $helper = new AdminHelper($config);
 $modules = $helper->getModules();
 
 if ($_POST['action'] == 'newModule') {
-    if ($helper->createNewModule($_POST['name'], $_POST['root_url'], $_POST['external'], $_POST['icon_url'], $_POST['levelNames'])) {
+    if ($helper->createNewModule($_POST['name'], $_POST['root_url'], $_POST['external'], $_POST['defaultAccess'], $_POST['icon_url'], $_POST['levelNames'])) {
         $_SESSION['success'] = true;
         header("Location: ?");
         die();

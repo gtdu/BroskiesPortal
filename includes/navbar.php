@@ -75,7 +75,7 @@ if (empty($result) || $result['core'] == 0) {
                 <?php
                 // Check if the user is an admin
                 // Admins are able to manage users and modules
-                if ($result['core'] > 2) {
+                if ($result['core'] > 3) {
                     ?>
                     <li class="nav-item active">
                         <a class="nav-link" href="users.php">Manage Users</a>
