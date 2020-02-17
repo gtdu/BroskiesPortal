@@ -10,12 +10,12 @@ if (devEnv() && !empty($_GET['slack_id'])) {
     } else {
         $_SESSION['error'][0] = "Incorrect credentials";
     }
+} elseif ($_GET['action'] == 'logout') {
+    $lh->logout();
 } elseif (!empty($_COOKIE['broskies_portal'])) {
     if ($lh->validateLogin($_COOKIE['broskies_portal'])) {
         header("Location: dashboard.php");
     }
-} elseif ($_GET['action'] == 'logout') {
-    $lh->logout();
 }
 
 if (!empty($_SESSION['token'])) {
