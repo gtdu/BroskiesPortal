@@ -33,7 +33,7 @@ if (empty($result) || $result['core'] == 0) {
                     <a class="nav-link" href="resources.php">Resources</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="todo.php">Todo</a>
+                    <a class="nav-link" href="todo.php">To-Do</a>
                 </li>
                 <?php
                 // Pull all permission data

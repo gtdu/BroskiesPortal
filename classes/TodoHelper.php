@@ -133,7 +133,7 @@ class TodoHelper extends Helper
         }
 
         if (count($todos) == 0) {
-            echo "<h3>No Todos Remaining</h3>";
+            echo "<h3>Nothing Left To-Do</h3>";
         } else {
             ?>
             <table class="table">

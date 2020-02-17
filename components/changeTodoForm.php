@@ -1,5 +1,5 @@
 <div class="pl-4 pr-4 mb-4">
-    <h2>Update Todo</h2>
+    <h2>Update To-Do</h2>
     <form method="post">
         <div class="form-group">
             <label for="newResourceTitle">Title</label>

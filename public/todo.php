@@ -61,7 +61,7 @@ include_once("../includes/navbar.php");
 
 ?>
 <div class="container pt-3">
-    <h1 class="mt-2">Todos</h1>
+    <h1 class="mt-2">To-Do</h1>
 <?php
 
 if ($site->userCorePem > 1) {
@@ -75,7 +75,7 @@ if ($site->userCorePem > 1) {
         $item = $helper->getTodoByID($_GET['id']);
         include_once("../components/changeTodoForm.php");
     } else {
-        echo '<a href="?action=create" role="button" class="btn btn-success mb-3 mr-3">Create Todo</a>';
+        echo '<a href="?action=create" role="button" class="btn btn-success mb-3 mr-3">Create To-Do</a>';
         if ($_GET['viewAll'] == "true") {
             echo '<a href="?viewAll=false" role="button" class="btn btn-outline-secondary mb-3">View Pending</a>';
         } else {

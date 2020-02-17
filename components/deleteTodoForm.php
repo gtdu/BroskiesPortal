@@ -1,6 +1,6 @@
 <div class="pl-4 pr-4 mb-4">
     <form method="post">
-        <h2 class="mt-4">Delete Todo</h2>
+        <h2 class="mt-4">Delete To-Do</h2>
         <div class="form-group">
             <label for="input1">Are you sure you want to delete this item?</label>
         </div>

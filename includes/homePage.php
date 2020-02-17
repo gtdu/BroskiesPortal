@@ -12,7 +12,7 @@ $calHelper->renderCalendar();
 ?>
 <hr/>
 
-<h2 class="mt-2">Todos</h2>
+<h2 class="mt-2">To-Do</h2>
 <?php
 $todoHelper = new TodoHelper($config);
 $todoHelper->renderTodos($site->userID, $site->userCorePem);
