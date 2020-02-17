@@ -28,7 +28,7 @@ When a user attempts to use this app, the iFrame will load `https://example.com/
 To authenticate the user, call 'https://broskies.example.com/api/' with `{api_key=123456789, session_token=ABCDEFG}`
 
 ## Standard Permission Levels
-Permissions are handled as an integer. The core application will treat `0` as the user should not have access. `1` and above will be treated as they have access but it is your responsibility to decide what each level means.
+Permissions are handled as an integer. The core application will treat `0` as the user should not have access. `1` and above will be treated as they have access but it is your responsibility to decide what each level means. You should also specify a human-readable name for each level when creating the module
 
 ### Example Permission Scale
   0. No Access
@@ -44,7 +44,5 @@ If a user is designated as a `Administrator`, then they will also have access to
     2. Update the variables in `config.ini`
     3. Run `setup.sql` to create the database and default data
 
-## Todo
+## To-Do
   - Allow modules to adjust permissions themselves
-  - Allow modules to specify enums of their permission levels
-  - Easier method for users to change their passwords via the GUI
