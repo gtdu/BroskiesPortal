@@ -67,6 +67,7 @@ class LoginHelper extends Helper
 
         if (!empty($result)) {
             session_destroy();
+            setcookie("broskies_portal", null, 1, '/');
             return true;
         } else {
             // Will only ever return false if the existing session token was invalid
