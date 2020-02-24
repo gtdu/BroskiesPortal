@@ -125,7 +125,7 @@ class TodoHelper extends Helper
         }
     }
 
-    public function renderTodos($user_id, $user_level, $all = false) {
+    public function renderTodos($user_id, $user_level, $all = false, $home = false) {
         if ($all) {
             $todos = $this->getTodos($user_id);
         } else {
@@ -152,9 +152,9 @@ class TodoHelper extends Helper
                 echo "<td><a href='" . $resource['link'] . "' target='_blank'>" . substr($resource['link'], 0, 40) . "...</a></td>";
                 echo "<td>" . $resource['description'] . "</td>";
                 echo "<td>";
-                echo '<a href="todo.php?action=completed&id=' . $resource['id'] . '"><img src="../resources/completed.png" class="icon" title="Mark as Completed"></a>';
+                echo '<a href="todo.php?action=completed&id=' . $resource['id'] . '&home=' . $home . '"><img src="../resources/completed.png" class="icon" title="Mark as Completed"></a>';
                 if ($user_level > 1) {
-                    echo '<a href="todo.php?action=delete&id=' . $resource['id'] . '"><img src="../resources/delete.png" class="icon"></a><a href="todo.php?action=edit&id=' . $resource['id'] . '"><img src="../resources/edit.png" class="icon"></a>';
+                    echo '<a href="todo.php?action=delete&id=' . $resource['id'] . '&home=' . $home . '"><img src="../resources/delete.png" class="icon"></a><a href="todo.php?action=edit&id=' . $resource['id'] . '"><img src="../resources/edit.png" class="icon"></a>';
                 }
                 echo "</td>";
                 echo "</tr>";

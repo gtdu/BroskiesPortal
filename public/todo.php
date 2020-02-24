@@ -43,8 +43,12 @@ if ($site->userCorePem > 1) {
         }
     } elseif ($_GET['action'] == 'completed') {
         if ($helper->markTodoAsCompleted($_GET['id'], $site->userID)) {
-            $_SESSION['success'] = true;
-            header("Location: ?");
+            // $_SESSION['success'] = true;
+            if ($_GET['home'] == true) {
+                header("Location: dashboard.php");
+            } else {
+                header("Location: ?");
+            }
             die();
         } else {
             $_SESSION['error'][0] = $helper->getErrorMessage();

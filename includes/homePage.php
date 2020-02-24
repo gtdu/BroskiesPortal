@@ -15,7 +15,7 @@ $calHelper->renderCalendar();
 <h2 class="mt-2">To-Do</h2>
 <?php
 $todoHelper = new TodoHelper($config);
-$todoHelper->renderTodos($site->userID, $site->userCorePem);
+$todoHelper->renderTodos($site->userID, $site->userCorePem, false, true);
 ?>
 <hr/>
 
