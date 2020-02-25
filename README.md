@@ -7,7 +7,20 @@ As a fraternity, we had a number of ideas for small applications that would make
 
 This central platform serves as the login and permission management center that all of these small "micro applications" can tap into.
 
-__PLEASE NOTE:__ This was designed to authenticate users using Slack. We generally recommend that the Slack administrator also administer this application. Once you've added a user to the Slack workspace, also add them to this application using their Slack User ID.
+## Authentication
+Our fraternity has a Slack workspace that we all use for communication and we built this application around that. Thus, we use Slack to handle authentication. We recommend that the workspace administrator also serve as the administrator of this application. Note that all of this will work with the free tier of Slack.
+
+### Adding New Users
+First, you must add the user to the Slack workspace and obtain their Slack User ID. This is the value that you use the in Create New User form on this application. Once this step has been completed, then they can login no problem
+
+### Setting Up The Integration
+  1. Create a new Slack App and add it to the workspace. (Done here)[https://api.slack.com/apps]
+  2. You don't need to submit it as this app will only ever be used with your workspace
+  3. Obtain the Slack Client ID, Client Secret and OAuth Access Token. Add all of these to your `config.ini`
+  4. Configure your Redirect URLs to `https://YOUR.SERVER.COM/slackCallback.php`
+  5. Configure your Scopes to include `chat:write` for `Bot Scopes` and `identity:basic, identity:email` for `User Scopes`
+After you've completed all of this, you should be able to successfully authenticate with Slack.
+_(Optional but recommended) You will want to update the Channel and User IDs within `includes/homePage.php` in the chaos section to be more fitting for your culture_
 
 ## Adding New Modules
 To add a new module, you must first navigate to the `Manage Modules` tab with a `Administrator` account. From here, you will generate an API key for that module. Now, all a sub-application needs to do is make an API call to `https://YOUR_URL.com/api/` with a POST request for `api_key` (which you just generated) and `session_token`.

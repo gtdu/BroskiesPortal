@@ -6,7 +6,7 @@
         </div>
         <div class="form-group">
             <label for="randomID">Slack User ID</label>
-            <input name="slack_id" type="text" class="form-control" id="randomID" aria-describedby="aria" placeholder="dude@gtdu.org" required>
+            <input name="slack_id" type="text" class="form-control" id="randomID" aria-describedby="aria" placeholder="U12345" required>
         </div>
         <div class="form-group">
             <label for="randomID">Phone Number</label>
