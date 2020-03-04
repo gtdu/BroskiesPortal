@@ -2,7 +2,7 @@
 // Render dynamic login message
 $loginMessage = $helper->getDynamicConfig()['HOME_MESSAGE'];
 if ($loginMessage != null) {
-    echo '<h3 class="mt-5 text-center">' . $loginMessage . '</h3><hr/>';
+    echo '<h3 class="mt-3 text-center">' . $loginMessage . '</h3><hr/>';
 }
 
 // Display events in the next 7 days

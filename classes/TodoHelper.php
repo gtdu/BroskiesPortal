@@ -140,20 +140,18 @@ class TodoHelper extends Helper
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="width: 25%">Title</th>
-                        <th style="width: 30%">Link</th>
-                        <th style="width: 35%">Description</th>
+                        <th style="width: 50%">Title</th>
+                        <th style="width: 40%">Description</th>
                         <th style="width: 10%">&nbsp;</th>
                     </tr>
                 </thead>
             <?php
             foreach ($todos as $resource) {
                 echo "<tr>";
-                echo "<td>" . $resource['title'] . "</td>";
                 if (empty($resource['link'])) {
-                    echo "<td></td>";
+                    echo "<td>" . $resource['title'] . "</td>";
                 } else {
-                    echo "<td><a href='" . $resource['link'] . "' target='_blank'>" . substr($resource['link'], 0, 30) . "...</a></td>";
+                    echo "<td><a href='" . $resource['link'] . "' target='_blank' title=" . $resource['link'] . ">" . $resource['title'] . "</a></td>";
                 }
                 echo "<td>" . $resource['description'] . "</td>";
                 echo "<td>";

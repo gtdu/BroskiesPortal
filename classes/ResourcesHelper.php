@@ -112,10 +112,9 @@ class ResourcesHelper extends Helper
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="width: 15%">Position</th>
-                        <th style="width: 20%">Title</th>
-                        <th style="width: 30%">Link</th>
-                        <th style="width: 35%">Description</th>
+                        <th style="width: 20%">Position</th>
+                        <th style="width: 35%">Title</th>
+                        <th style="width: 45%">Description</th>
                         <?php
                         if ($user_level > 1) {
                             echo '<th>&nbsp;</th>';
@@ -127,8 +126,11 @@ class ResourcesHelper extends Helper
             foreach ($resources as $resource) {
                 echo "<tr>";
                 echo "<td>" . $resource['position'] . "</td>";
-                echo "<td>" . $resource['title'] . "</td>";
-                echo "<td><a href='" . $resource['link'] . "' target='_blank'>" . substr($resource['link'], 0, 40) . "...</a></td>";
+                if (empty($resource['link'])) {
+                    echo "<td>" . $resource['title'] . "</td>";
+                } else {
+                    echo "<td><a href='" . $resource['link'] . "' target='_blank' title=" . $resource['link'] . ">" . $resource['title'] . "</a></td>";
+                }
                 echo "<td>" . $resource['description'] . "</td>";
                 if ($user_level > 1) {
                     echo '<td><a href="resources.php?action=delete&id=' . $resource['id'] . '"><img src="../resources/delete.png" class="icon"></a><a href="resources.php?action=edit&id=' . $resource['id'] . '"><img src="../resources/edit.png" class="icon"></a></td>';
