@@ -108,6 +108,7 @@ class ResourcesHelper extends Helper
             echo "<h3>No Resources Found</h3>";
         } else {
             ?>
+            <div class="table-responsive">
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
@@ -134,7 +135,7 @@ class ResourcesHelper extends Helper
                 }
                 echo "</tr>";
             }
-            echo "</table>";
+            echo "</table></div>";
         }
     }
 }

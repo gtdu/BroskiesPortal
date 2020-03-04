@@ -18,6 +18,7 @@ class CalendarHelper extends Helper
                 'filterDaysBefore' => 2,
             ));
 
+            echo '<div class="table-responsive">';
             echo "<table class='table'>";
             echo "<tr>";
             // Days of the week are headers
@@ -43,7 +44,7 @@ class CalendarHelper extends Helper
                 }
                 echo "</td>";
             }
-            echo "</table>";
+            echo "</table></div>";
         } catch (\Exception $e) {
             die($e);
         }

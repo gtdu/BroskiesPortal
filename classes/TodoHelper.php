@@ -136,6 +136,7 @@ class TodoHelper extends Helper
             echo "<h3>Nothing Left To-Do</h3>";
         } else {
             ?>
+            <div class="table-responsive">
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
@@ -163,7 +164,7 @@ class TodoHelper extends Helper
                 echo "</td>";
                 echo "</tr>";
             }
-            echo "</table>";
+            echo "</table></div>";
         }
     }
 }
