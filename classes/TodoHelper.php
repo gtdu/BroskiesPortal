@@ -149,7 +149,11 @@ class TodoHelper extends Helper
             foreach ($todos as $resource) {
                 echo "<tr>";
                 echo "<td>" . $resource['title'] . "</td>";
-                echo "<td><a href='" . $resource['link'] . "' target='_blank'>" . substr($resource['link'], 0, 40) . "...</a></td>";
+                if (empty($resource['link'])) {
+                    echo "<td></td>";
+                } else {
+                    echo "<td><a href='" . $resource['link'] . "' target='_blank'>" . substr($resource['link'], 0, 30) . "...</a></td>";
+                }
                 echo "<td>" . $resource['description'] . "</td>";
                 echo "<td>";
                 echo '<a href="todo.php?action=completed&id=' . $resource['id'] . '&home=' . $home . '"><img src="../resources/completed.png" class="icon" title="Mark as Completed"></a>';

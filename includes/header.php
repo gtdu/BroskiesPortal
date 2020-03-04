@@ -14,6 +14,16 @@
     <meta name="msapplication-TileColor" content="#3d7cff">
     <meta name="msapplication-config" content="../resources/favicon/browserconfig.xml">
     <meta name="theme-color" content="#3d7cff">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159635936-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-159635936-1');
+    </script>
+
 </head>
 
 <body>

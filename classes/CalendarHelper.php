@@ -13,14 +13,16 @@ class CalendarHelper extends Helper
     public function renderCalendar() {
         try {
             // Pull events from ical feed
-            $ical = new ICal();
-            $ical->initUrl($this->config['cal_url'], $username = null, $password = null, $userAgent = null);
+            $ical = new ICal($this->config['cal_url'], array(
+                'filterDaysAfter' => 8,
+                'filterDaysBefore' => 2,
+            ));
 
             echo "<table class='table'>";
             echo "<tr>";
             // Days of the week are headers
             for ($i = 0; $i < 7; $i++) {
-                echo "<th>" . date('l', strtotime('+' . $i . ' days')) . "</th>";
+                echo "<th style='width: 14%'>" . date('l', strtotime('+' . $i . ' days')) . "</th>";
             }
             echo "</tr>";
 
@@ -31,11 +33,13 @@ class CalendarHelper extends Helper
                 // Check if there is an event
                 if (!empty($events)) {
                     // Render each event
+                    echo "<ul>";
                     foreach ($events as $event) {
-                        echo $event->summary . "</br>";
+                        echo "<li>" . $event->summary . "</li>";
                     }
+                    echo "</ul>";
                 } else {
-                    echo "<i>Nothing</i>";
+                    echo "❌";
                 }
                 echo "</td>";
             }
