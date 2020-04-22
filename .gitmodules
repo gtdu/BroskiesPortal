@@ -13,3 +13,6 @@
 [submodule "modules/BroskiesPortal-MailBot"]
 	path = modules/BroskiesPortal-MailBot
 	url = https://github.com/gtdu/BroskiesPortal-MailBot.git
+[submodule "modules/BroskiesPortal-Jukebox"]
+	path = modules/BroskiesPortal-Jukebox
+	url = https://github.com/gtdu/BroskiesPortal-Jukebox.git
