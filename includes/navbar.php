@@ -27,13 +27,13 @@ if (empty($result) || $result['core'] == 0) {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="dashboard.php"><img src="../resources/home.png" title="Home" class="icon"></a>
+                    <a class="nav-link" href="../public/dashboard.php"><img src="../resources/home.png" title="Home" class="icon" alt=""></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="resources.php">Resources</a>
+                    <a class="nav-link" href="../public/resources.php">Resources</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="todo.php">To-Do</a>
+                    <a class="nav-link" href="../public/todo.php">To-Do</a>
                 </li>
                 <?php
                 // Pull all permission data
@@ -56,7 +56,7 @@ if (empty($result) || $result['core'] == 0) {
                         $handle = $config['dbo']->prepare('SELECT id, name, root_url, external FROM modules WHERE pem_name = ? LIMIT 1');
                         $handle->bindValue(1, $key);
                         $handle->execute();
-                        $pemResult = $handle->fetchAll(\PDO::FETCH_ASSOC)[0];
+                        $pemResult = $handle->fetchAll(PDO::FETCH_ASSOC)[0];
 
                         // Check if the module actually exists
                         if (!empty($pemResult)) {
@@ -78,19 +78,19 @@ if (empty($result) || $result['core'] == 0) {
                 if ($result['core'] > 3) {
                     ?>
                     <li class="nav-item active">
-                        <a class="nav-link" href="users.php">Manage Users</a>
+                        <a class="nav-link" href="../public/users.php">Manage Users</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="modules.php">Manage Modules</a>
+                        <a class="nav-link" href="../public/modules.php">Manage Modules</a>
                     </li>
                     <?php
                 }
                 ?>
                 <li class="nav-item active">
-                    <a class="nav-link" href="settings.php"><img src="../resources/settings.png" title="Settings" class="icon"></a>
+                    <a class="nav-link" href="../public/settings.php"><img src="../resources/settings.png" title="Settings" class="icon" alt=""></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?action=logout"><img src="../resources/logout.png" title="Logout" class="icon"></a>
+                    <a class="nav-link" href="../public/index.php?action=logout"><img src="../resources/logout.png" title="Logout" class="icon" alt=""></a>
                 </li>
             </ul>
         </div>

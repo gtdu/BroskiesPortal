@@ -2,7 +2,7 @@
 <script>
 // Random password generator
 function generatePassword() {
-    var randomNumber = Math.floor(Math.random() * 100);
+    const randomNumber = Math.floor(Math.random() * 100);
     document.getElementById("newUserPassword").value = "DikaiaBrother" + randomNumber
 }
 </script>

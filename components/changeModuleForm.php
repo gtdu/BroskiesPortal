@@ -1,3 +1,6 @@
+<?php
+/** @var $item array */
+?>
 <div class="pl-4 pr-4 mb-4">
     <form method="post">
         <div class="form-group">
@@ -10,7 +13,7 @@
         </div>
         <div class="form-group">
             <label for="newUserName2">Access Level Names</label>
-            <small>Make a comma seperated list of the permission level names with the first value corresponding to 0 and increasing</small>
+            <small>Make a comma separated list of the permission level names with the first value corresponding to 0 and increasing</small>
             <input name="levelNames" type="text" class="form-control" id="newUserName2" aria-describedby="aria" placeholder="No Access, Pledge, Brother, Officer, Admin" value="<?php echo $item['levelNames']; ?>">
         </div>
         <div class="form-group">

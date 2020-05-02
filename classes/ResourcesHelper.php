@@ -17,13 +17,17 @@ class ResourcesHelper extends Helper
         $handle = $this->conn->prepare('SELECT * FROM `resources` WHERE id = ? LIMIT 1');
         $handle->bindValue(1, $resource_id);
         if ($handle->execute()) {
-            return $handle->fetchAll(\PDO::FETCH_ASSOC)[0];
+            return $handle->fetchAll(PDO::FETCH_ASSOC)[0];
         } else {
             $this->error = $this->conn->errorInfo()[2];
             return false;
         }
     }
 
+    /**
+     * @param $vis_level
+     * @return bool|array
+     */
     public function getResources($vis_level)
     {
         if (empty($vis_level)) {
@@ -34,7 +38,7 @@ class ResourcesHelper extends Helper
         $handle = $this->conn->prepare('SELECT * FROM `resources` WHERE visibility <= ? ORDER BY position, title');
         $handle->bindValue(1, $vis_level);
         if ($handle->execute()) {
-            return $handle->fetchAll(\PDO::FETCH_ASSOC);
+            return $handle->fetchAll(PDO::FETCH_ASSOC);
         } else {
             $this->error = $this->conn->errorInfo()[2];
             return false;
@@ -133,7 +137,7 @@ class ResourcesHelper extends Helper
                 }
                 echo "<td>" . $resource['description'] . "</td>";
                 if ($user_level > 1) {
-                    echo '<td><a href="resources.php?action=delete&id=' . $resource['id'] . '"><img src="../resources/delete.png" class="icon"></a><a href="resources.php?action=edit&id=' . $resource['id'] . '"><img src="../resources/edit.png" class="icon"></a></td>';
+                    echo '<td><a href="resources.php?action=delete&id=' . $resource['id'] . '"><img src="../resources/delete.png" class="icon" alt=""></a><a href="resources.php?action=edit&id=' . $resource['id'] . '"><img src="../resources/edit.png" class="icon" alt=""></a></td>';
                 }
                 echo "</tr>";
             }

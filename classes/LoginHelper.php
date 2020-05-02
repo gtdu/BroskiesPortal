@@ -27,12 +27,17 @@ class LoginHelper extends Helper
         $handle = $this->conn->prepare('SELECT id, name FROM users WHERE slack_id = ? LIMIT 1');
         $handle->bindValue(1, $id);
         $handle->execute();
-        $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $handle->fetchAll(PDO::FETCH_ASSOC);
 
         // Make sure there was a result
         if (!empty($result)) {
             // Generate a session token
-            $token = Uuid::uuid4()->toString();
+            try {
+                $token = Uuid::uuid4()->toString();
+            } catch (Exception $e) {
+                $this->error = "Unable to generate session token";
+                return false;
+            }
 
             // Update the user with the session token
             $handle = $this->conn->prepare('UPDATE users SET session_token = ? WHERE id = ?');
@@ -63,7 +68,7 @@ class LoginHelper extends Helper
             return false;
         }
 
-        $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $handle->fetchAll(PDO::FETCH_ASSOC);
         setcookie("broskies_portal", "", 1, '/');
 
         if (!empty($result)) {

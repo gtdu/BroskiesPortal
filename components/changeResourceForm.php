@@ -1,8 +1,11 @@
+<?php
+/** @var $item array */
+?>
 <div class="pl-4 pr-4 mb-4">
     <h2>Update Resource</h2>
     <form method="post">
         <div class="form-group">
-            <label for="newResourceTitle">Title</label>
+            <label for="newUserName">Title</label>
             <input name="title" type="text" class="form-control" id="newUserName" aria-describedby="aria" placeholder="Roll Book" required value="<?php echo $item['title']; ?>">
         </div>
         <div class="form-group">
@@ -19,7 +22,7 @@
         </div>
         <div class="form-group">
             <label for="changeCoreLevel">Visibility</label>
-            <select name="visibility" required id="changeCoreLevel" class="form-control" required>
+            <select name="visibility" id="changeCoreLevel" class="form-control" required>
                 <option value="1" <?php if ($item['visibility'] == 1){ echo "selected"; }?>>Pledge</option>
                 <option value="1" <?php if ($item['visibility'] == 2){ echo "selected"; }?>>Brother</option>
                 <option value="2" <?php if ($item['visibility'] == 2){ echo "selected"; }?>>MEC Officer</option>

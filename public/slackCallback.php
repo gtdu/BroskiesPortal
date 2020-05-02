@@ -28,5 +28,3 @@ if ($lh->validateLogin($user_id)) {
 }
 
 curl_close($ch);
-
-?>

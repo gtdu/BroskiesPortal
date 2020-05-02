@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "105670b2ded285a854a9e8454754bf67",
+    "content-hash": "ea6a399afda8429156322c09ab3d0823",
     "packages": [
         {
             "name": "johngrogg/ics-parser",
@@ -587,7 +587,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-curl": "*"
     },
     "platform-dev": []
 }

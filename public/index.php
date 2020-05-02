@@ -36,7 +36,7 @@ ob_start();
 ?>
 <div class="container mt-3">
     <h1>GTDU Broskies Portal</h1>
-    <a href="https://slack.com/oauth/authorize?scope=identity.basic&client_id=<?php echo $config['slack_id']; ?>"><img src="https://api.slack.com/img/sign_in_with_slack.png" /></a>
+    <a href="https://slack.com/oauth/authorize?scope=identity.basic&client_id=<?php echo $config['slack_id']; ?>"><img src="https://api.slack.com/img/sign_in_with_slack.png"  alt=""/></a>
 </div>
 <?php
 

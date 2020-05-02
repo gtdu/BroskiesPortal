@@ -11,8 +11,6 @@ class site
     private $footers;
     private $page;
     private $title;
-    private $errors;
-    private $success;
 
     public $userName;
     public $userCorePem;
@@ -21,7 +19,7 @@ class site
     /**
     * Setup the site
     *
-    * @param pageTitle String for HTML <title> tags
+    * @param $pageTitle string String for HTML <title> tags
     */
     public function __construct($pageTitle)
     {
@@ -58,24 +56,27 @@ class site
     }
 
     /**
-    * Public setter for headers
-    */
+     * Public setter for headers
+     * @param $file
+     */
     public function addHeader($file)
     {
         $this->headers[] = $file;
     }
 
     /**
-    * Public setter for footers
-    */
+     * Public setter for footers
+     * @param $file
+     */
     public function addFooter($file)
     {
         $this->footers[] = $file;
     }
 
     /**
-    * Public setter for page content
-    */
+     * Public setter for page content
+     * @param page $page
+     */
     public function setPage(page $page)
     {
         $this->page = $page;
@@ -96,7 +97,7 @@ class site
             $handle = $config['dbo']->prepare('SELECT id, name, slack_id, core FROM users WHERE session_token = ?');
             $handle->bindValue(1, $_SESSION['token']);
             $handle->execute();
-            $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
+            $result = $handle->fetchAll(PDO::FETCH_ASSOC);
 
             // Invalid session token
             if (empty($result)) {
@@ -119,7 +120,6 @@ class site
     */
     private function renderErrors()
     {
-        $errorOutput = "";
         if (empty($_SESSION['error'])) {
             return;
         }

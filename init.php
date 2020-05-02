@@ -17,7 +17,7 @@ spl_autoload_register(function ($class_name) {
 // Parse the static config file
 $ini = parse_ini_file("config.ini", true)["du"];
 
-// Create the databse connection
+// Create the database connection
 try {
     $pdo = new PDO(
         'mysql:host=' . $ini['db_host'] . ';dbname=' . $ini['db_name'] . ';charset=utf8mb4',

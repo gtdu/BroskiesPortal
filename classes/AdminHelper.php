@@ -18,30 +18,32 @@ class AdminHelper extends Helper
     {
         $handle = $this->conn->prepare('SELECT * FROM users ORDER BY name, id');
         $handle->execute();
-        return $handle->fetchAll(\PDO::FETCH_ASSOC);
+        return $handle->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
-    * Return the user's and associated info
-    *
-    * @param id The users DB ID
-    */
+     * Return the user's and associated info
+     *
+     * @param $id int The users DB ID
+     * @return array
+     */
     public function getUserByID($id)
     {
         $handle = $this->conn->prepare('SELECT * FROM users WHERE id = ? LIMIT 1');
         $handle->bindValue(1, $id);
         $handle->execute();
-        return $handle->fetchAll(\PDO::FETCH_ASSOC)[0];
+        return $handle->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
     /**
-    * Create a new user
-    *
-    * @param name The user's name. We recommend Last, First
-    * @param eamil The user's slack ID
-    * @param password The user's password
-    * @param phone The user's phone number
-    */
+     * Create a new user
+     *
+     * @param $name string The user's name. We recommend Last, First
+     * @param $slack_id string The user's slack ID
+     * @param $password string The user's password
+     * @param $phone string The user's phone number
+     * @return bool
+     */
     public function newUser($name, $slack_id, $password, $phone)
     {
         // Clean data
@@ -69,12 +71,13 @@ class AdminHelper extends Helper
     }
 
     /**
-    * Update a specific permission for the user
-    *
-    * @param user_id The user's DB ID
-    * @param perm_field The technical permission name
-    * @param perm_level The new value
-    */
+     * Update a specific permission for the user
+     *
+     * @param $user_id int The user's DB ID
+     * @param $perm_field string The technical permission name
+     * @param $perm_level int The new value
+     * @return bool
+     */
     public function setUserPerm($user_id, $perm_field, $perm_level)
     {
         // Validate data
@@ -94,15 +97,16 @@ class AdminHelper extends Helper
     }
 
     /**
-    * Update the users phone number
-    *
-    * @param user_id The user's DB ID
-    * @param value The phone number
-    */
+     * Update the users phone number
+     *
+     * @param $user_id int The user's DB ID
+     * @param $value string The phone number
+     * @return bool
+     */
     public function setUserPhone($user_id, $value)
     {
         // Clean data
-        $phone = removeNonAlphaNumeric($phone);
+        $value = removeNonAlphaNumeric($value);
 
         // Validate data
         if (empty($user_id) || empty($value)) {
@@ -118,31 +122,11 @@ class AdminHelper extends Helper
     }
 
     /**
-    * Reset a user's password
-    *
-    * @param user_id The user's DB ID
-    * @param new_password The new value
-    */
-    public function resetUserPassword($user_id, $new_password)
-    {
-        // Validate data
-        if (empty($user_id) || empty($new_password)) {
-            $this->error = "All fields are required";
-            return false;
-        }
-
-        // Perform operation
-        $handle = $this->conn->prepare('UPDATE users SET password = ? WHERE id = ?');
-        $handle->bindValue(1, password_hash($new_password, PASSWORD_DEFAULT));
-        $handle->bindValue(2, $user_id);
-        return $handle->execute();
-    }
-
-    /**
-    * Remove a user
-    *
-    * @param user_id The user's DB ID
-    */
+     * Remove a user
+     *
+     * @param $user_id int The user's DB ID
+     * @return bool
+     */
     public function deleteUser($user_id)
     {
         // Validate data
@@ -168,14 +152,15 @@ class AdminHelper extends Helper
             $this->error = $this->conn->errorInfo()[2];
             return false;
         }
-        return $handle->fetchAll(\PDO::FETCH_ASSOC);
+        return $handle->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
-    * Return all the modules and associated info about a module
-    *
-    * @param id Module DB ID
-    */
+     * Return all the modules and associated info about a module
+     *
+     * @param $id int Module DB ID
+     * @return bool
+     */
     public function getModuleByID($id)
     {
         $handle = $this->conn->prepare('SELECT * FROM modules WHERE id = ? LIMIT 1');
@@ -184,19 +169,20 @@ class AdminHelper extends Helper
             $this->error = $this->conn->errorInfo()[2];
             return false;
         }
-        return $handle->fetchAll(\PDO::FETCH_ASSOC)[0];
+        return $handle->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
     /**
-    * Create a new user
-    *
-    * @param module_name The modules's name
-    * @param root_url The URL of the module's code
-    * @param external Should the module open in a new tab
-    * @param defaultAccess Default access level
-    * @param icon_url The URL of the module's icon
-    * @param levelNames The different level names
-    */
+     * Create a new user
+     *
+     * @param $module_name string The modules's name
+     * @param $root_url string The URL of the module's code
+     * @param $external string Should the module open in a new tab
+     * @param $defaultAccess int Default access level
+     * @param $icon_url string The URL of the module's icon
+     * @param $levelNames string The different level names
+     * @return bool
+     */
     public function createNewModule($module_name, $root_url, $external, $defaultAccess, $icon_url, $levelNames)
     {
         // Validate data
@@ -214,7 +200,12 @@ class AdminHelper extends Helper
         }
 
         // Generate the API key
-        $api_key = Uuid::uuid4()->toString();
+        try {
+            $api_key = Uuid::uuid4()->toString();
+        } catch (Exception $e) {
+            $this->error = "Unable to generate API key";
+            return false;
+        }
 
         // Perform operations
         $handle = $this->conn->prepare('INSERT INTO modules (api_token, name, pem_name, root_url, external, icon_url, levelNames) VALUES (?, ?, ?, ?, ?, ?, ?)');
@@ -233,14 +224,15 @@ class AdminHelper extends Helper
     }
 
     /**
-    * Modify a module. Only thing that can be changed is the root url
-    *
-    * @param module_id The modules's DB ID
-    * @param root_url The URL of the module's code
-    * @param external If the module should open in a new tab or not
-    * @param icon_url The URL of the module's icon
-    * @param levelNames The different level names
-    */
+     * Modify a module. Only thing that can be changed is the root url
+     *
+     * @param $module_id int The modules's DB ID
+     * @param $root_url string The URL of the module's code
+     * @param $external string If the module should open in a new tab or not
+     * @param $icon_url string The URL of the module's icon
+     * @param $levelNames string The different level names
+     * @return bool
+     */
     public function editModule($module_id, $root_url, $external, $icon_url, $levelNames)
     {
         // Validate data
@@ -267,10 +259,11 @@ class AdminHelper extends Helper
     }
 
     /**
-    * Delete a module
-    *
-    * @param module_id The modules's DB ID
-    */
+     * Delete a module
+     *
+     * @param $module_id int The modules's DB ID
+     * @return bool
+     */
     public function deleteModule($module_id)
     {
         // Validate data
@@ -286,7 +279,7 @@ class AdminHelper extends Helper
             $this->error = $this->conn->errorInfo()[2];
             return false;
         }
-        $pem_name = $handle->fetchAll(\PDO::FETCH_ASSOC)[0]['pem_name'];
+        $pem_name = $handle->fetchAll(PDO::FETCH_ASSOC)[0]['pem_name'];
 
         // Remove the permission from the users table
         $handle = $this->conn->prepare('ALTER TABLE `users` DROP COLUMN `' . $pem_name . '`');
@@ -301,7 +294,7 @@ class AdminHelper extends Helper
     }
 
     /**
-    * Retrieve all the dynamic confiurations
+    * Retrieve all the dynamic configurations
     *
     * EX: The home page message
     */
@@ -313,7 +306,7 @@ class AdminHelper extends Helper
             $this->error = $this->conn->errorInfo()[2];
             return false;
         }
-        $results = $handle->fetchAll(\PDO::FETCH_ASSOC);
+        $results = $handle->fetchAll(PDO::FETCH_ASSOC);
 
         // Format it
         $output = array();
@@ -325,13 +318,14 @@ class AdminHelper extends Helper
     }
 
     /**
-    * Retrieve all the dynamic confiurations
-    *
-    * EX: The home page message
-    *
-    * @param key The config dictionary key
-    * @param value The config dictionary value
-    */
+     * Retrieve all the dynamic configurations
+     *
+     * EX: The home page message
+     *
+     * @param $key string The config dictionary key
+     * @param $value string The config dictionary value
+     * @return bool
+     */
     public function updateDynamicConfig($key, $value)
     {
         // Validate data

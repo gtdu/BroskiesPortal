@@ -84,7 +84,7 @@ include_once("../includes/navbar.php");
                 echo "<td>" . $m['name'] . '</td>';
                 echo "<td>" . $m['api_token'] . '</td>';
                 echo "<td>" . $m['root_url'] . '</td>';
-                echo '<td><a href="modules.php?action=delete&id=' . $m['id'] . '"><img src="../resources/delete.png" class="icon"></a><a href="modules.php?action=edit&id=' . $m['id'] . '"><img src="../resources/edit.png" class="icon"></a></td>';
+                echo '<td><a href="modules.php?action=delete&id=' . $m['id'] . '"><img src="../resources/delete.png" class="icon" alt=""></a><a href="modules.php?action=edit&id=' . $m['id'] . '"><img src="../resources/edit.png" class="icon" alt=""></a></td>';
                 echo "</tr>";
             }
         }

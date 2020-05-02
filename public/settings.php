@@ -69,7 +69,7 @@ include_once("../includes/navbar.php");
             <div class="pl-4 pr-4 mb-4">
                 <form method="post">
                     <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Set Default Module</label>
+                        <label for="deleteModuleModule">Set Default Module</label>
                         <select name="value" required id="deleteModuleModule" class="form-control">
                             <option value="-1">Resources</option>
                             <?php

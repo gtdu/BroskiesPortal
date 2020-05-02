@@ -8,7 +8,7 @@ class Helper {
     /**
     * Setup the helper
     *
-    * @param input The config array (contains config info, DB object, etc.)
+    * @param $input array The config array (contains config info, DB object, etc.)
     */
     public function __construct($input)
     {

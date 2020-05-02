@@ -1,4 +1,6 @@
 <?php
+/** @var $helper AdminHelper */
+
 // Render dynamic login message
 $loginMessage = $helper->getDynamicConfig()['HOME_MESSAGE'];
 if ($loginMessage != null) {
@@ -25,7 +27,7 @@ $default_id = $helper->getDynamicConfig()['DEFAULT_MODULE'];
 if ($default_id != -1) {
     ?>
     <div class="d-flex content">
-        <iframe src="<?php echo $helper->getModule($default_id)['root_url'] . "?session_token=" . $_SESSION['token']; ?>" class="flex-fill"></iframe>
+        <iframe src="<?php echo $helper->getModuleByID($default_id)['root_url'] . "?session_token=" . $_SESSION['token']; ?>" class="flex-fill"></iframe>
     </div>
     <?php
 } else {

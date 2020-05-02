@@ -5,13 +5,13 @@ This project serves as the orchestration platform for submodules. This project w
 ## Original Use Case
 As a fraternity, we had a number of ideas for small applications that would make life easier for our members (ex: a central repository of links/resources, everybody's contact information, funny stories, etc.). However, all of these ideas were too small to make into their own standalone application that would gain traction; hence `Broskies Portal` was born.
 
-This central platform serves as the login and permission management center that all of these small "micro applications" can tap into.
+This central platform serves as the login and permission management center all of these small "micro applications" can tap into.
 
 ## Authentication
-Our fraternity has a Slack workspace that we all use for communication and we built this application around that. Thus, we use Slack to handle authentication. We recommend that the workspace administrator also serve as the administrator of this application. Note that all of this will work with the free tier of Slack.
+Our fraternity has a Slack workspace that we all use for communication, and we built this application around that. Thus, we use Slack to handle authentication. We recommend that the workspace administrator also serve as the administrator of this application. Note that all of this will work with the free tier of Slack.
 
 ### Adding New Users
-First, you must add the user to the Slack workspace and obtain their Slack User ID. This is the value that you use the in Create New User form on this application. Once this step has been completed, then they can login no problem
+First, you must add the user to the Slack workspace and obtain their Slack User ID. This is the value that you use the in Create New User form on this application. Once this step has been completed, then they can log in no problem.
 
 ### Setting Up The Integration
   1. Create a new Slack App and add it to the workspace. (Done here)[https://api.slack.com/apps]
@@ -41,7 +41,7 @@ When a user attempts to use this app, the iFrame will load `https://example.com/
 To authenticate the user, call 'https://broskies.example.com/api/' with `{api_key=123456789, session_token=ABCDEFG}`
 
 ## Standard Permission Levels
-Permissions are handled as an integer. The core application will treat `0` as the user should not have access. `1` and above will be treated as they have access but it is your responsibility to decide what each level means. You should also specify a human-readable name for each level when creating the module
+Permissions are handled as an integer. The core application will treat `0` as the user should not have access. `1` and above will be treated as they have access, but it is your responsibility to decide what each level means. You should also specify a human-readable name for each level when creating the module.
 
 ### Example Permission Scale
   0. No Access

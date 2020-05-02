@@ -93,7 +93,7 @@ if ($_GET['action'] == 'create') {
     foreach ($users as $user) {
         echo "<tr>";
         echo "<td>" . $user['name'] . '</td>';
-        echo '<td><a href="users.php?action=delete&id=' . $user['id'] . '"><img src="../resources/delete.png" class="icon"></a><a href="users.php?action=edit&id=' . $user['id'] . '"><img src="../resources/edit.png" class="icon"></a></td>';
+        echo '<td><a href="users.php?action=delete&id=' . $user['id'] . '"><img src="../resources/delete.png" class="icon" alt=""></a><a href="users.php?action=edit&id=' . $user['id'] . '"><img src="../resources/edit.png" class="icon" alt=""></a></td>';
         echo "<td>";
         if ($user['core'] == 0) {
             echo "<span style='color: red'>No Access</span>";

@@ -12,12 +12,13 @@ class APIHelper extends Helper
     private $level = 0;
 
     /**
-    * Check if the credentials provided are valid and save the resulting query or error info
-    *
-    *
-    * @param api_key This is the modules API Key generated on creation
-    * @param session_token This is the user's session token that was passed when the module was loaded
-    */
+     * Check if the credentials provided are valid and save the resulting query or error info
+     *
+     *
+     * @param $api_key string This is the modules API Key generated on creation
+     * @param $session_token string This is the user's session token that was passed when the module was loaded
+     * @return bool
+     */
     public function performAuth($api_key, $session_token)
     {
         if (empty($api_key) || empty($session_token)) {
@@ -28,13 +29,13 @@ class APIHelper extends Helper
         $handle = $this->conn->prepare('SELECT pem_name FROM modules WHERE api_token = ? LIMIT 1');
         $handle->bindValue(1, $api_key);
         $handle->execute();
-        $result = $handle->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $handle->fetchAll(PDO::FETCH_ASSOC);
 
         if (!empty($result)) {
             $handle = $this->conn->prepare('SELECT `' . $result[0]['pem_name'] . '`, name, slack_id, phone, id, core FROM users WHERE session_token = ? LIMIT 1');
             $handle->bindValue(1, $session_token);
             $handle->execute();
-            $result2 = $handle->fetchAll(\PDO::FETCH_ASSOC);
+            $result2 = $handle->fetchAll(PDO::FETCH_ASSOC);
 
             if (!empty($result2)) {
                 $data = array(
@@ -61,7 +62,7 @@ class APIHelper extends Helper
     /**
     * Return the data queries in performAuth
     *
-    * @return Array The data object or NULL depending on if query was successful
+    * @return array The data object or NULL depending on if query was successful
     */
     public function getData()
     {
@@ -91,12 +92,12 @@ class APIHelper extends Helper
     /**
     * Return the data queries in performAuth
     *
-    * @return Array The data of all the brothers
+    * @return array The data of all the brothers
     */
     public function getAllData()
     {
         $handle = $this->conn->prepare('SELECT id, name, slack_id, phone FROM users ORDER BY name');
         $handle->execute();
-        return $handle->fetchAll(\PDO::FETCH_ASSOC);
+        return $handle->fetchAll(PDO::FETCH_ASSOC);
     }
 }

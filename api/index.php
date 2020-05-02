@@ -1,10 +1,10 @@
 <?php
 
 /**
-* This file serves as the API endpoing for external modules to communicate with the core system
+* This file serves as the API endpoint for external modules to communicate with the core system
 *
-* @param api_key This is the modules API Key generated on creation
-* @param session_token This is the user's session token that was passed when the module was loaded
+* @param $api_key string This is the modules API Key generated on creation
+* @param $session_token string This is the user's session token that was passed when the module was loaded
 *
 * @author Ryan Cobelli <ryan.cobelli@gmail.com>
 */

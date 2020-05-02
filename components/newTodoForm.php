@@ -2,7 +2,7 @@
     <h2>Create To-Do</h2>
     <form method="post">
         <div class="form-group">
-            <label for="newResourceTitle">Title</label>
+            <label for="newUserName">Title</label>
             <input name="title" type="text" class="form-control" id="newUserName" aria-describedby="aria" placeholder="Survey" required>
         </div>
         <div class="form-group">

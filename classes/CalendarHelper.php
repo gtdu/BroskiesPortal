@@ -45,9 +45,8 @@ class CalendarHelper extends Helper
                 echo "</td>";
             }
             echo "</table></div>";
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             die($e);
         }
     }
 }
-?>

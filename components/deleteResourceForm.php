@@ -1,3 +1,6 @@
+<?php
+/** @var $item array */
+?>
 <div class="pl-4 pr-4 mb-4">
     <form method="post">
         <h2 class="mt-4">Delete Resource</h2>

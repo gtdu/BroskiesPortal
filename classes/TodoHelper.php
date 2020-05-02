@@ -17,24 +17,31 @@ class TodoHelper extends Helper
         $handle = $this->conn->prepare('SELECT * FROM `todo` WHERE id = ? LIMIT 1');
         $handle->bindValue(1, $resource_id);
         if ($handle->execute()) {
-            return $handle->fetchAll(\PDO::FETCH_ASSOC)[0];
+            return $handle->fetchAll(PDO::FETCH_ASSOC)[0];
         } else {
             $this->error = $this->conn->errorInfo()[2];
             return false;
         }
     }
 
+    /**
+     * @return bool|array
+     */
     public function getTodos()
     {
         $handle = $this->conn->prepare('SELECT * FROM `todo` ORDER BY title');
         if ($handle->execute()) {
-            return $handle->fetchAll(\PDO::FETCH_ASSOC);
+            return $handle->fetchAll(PDO::FETCH_ASSOC);
         } else {
             $this->error = $this->conn->errorInfo()[2];
             return false;
         }
     }
 
+    /**
+     * @param $user_id
+     * @return bool|array
+     */
     public function getUncompletedTodos($user_id) {
         if (empty($user_id)) {
             $this->error = "All fields are required";
@@ -44,7 +51,7 @@ class TodoHelper extends Helper
         $handle = $this->conn->prepare('SELECT id, title, link, description FROM `todo` WHERE id NOT IN (SELECT todo_id FROM `todoCompletions` WHERE user_id = ?)');
         $handle->bindValue(1, $user_id);
         if ($handle->execute()) {
-            return $handle->fetchAll(\PDO::FETCH_ASSOC);
+            return $handle->fetchAll(PDO::FETCH_ASSOC);
         } else {
             $this->error = $this->conn->errorInfo()[2];
             return false;
@@ -127,7 +134,7 @@ class TodoHelper extends Helper
 
     public function renderTodos($user_id, $user_level, $all = false, $home = false) {
         if ($all) {
-            $todos = $this->getTodos($user_id);
+            $todos = $this->getTodos();
         } else {
             $todos = $this->getUncompletedTodos($user_id);
         }
@@ -155,9 +162,9 @@ class TodoHelper extends Helper
                 }
                 echo "<td>" . $resource['description'] . "</td>";
                 echo "<td>";
-                echo '<a href="todo.php?action=completed&id=' . $resource['id'] . '&home=' . $home . '"><img src="../resources/completed.png" class="icon" title="Mark as Completed"></a>';
+                echo '<a href="todo.php?action=completed&id=' . $resource['id'] . '&home=' . $home . '"><img src="../resources/completed.png" class="icon" title="Mark as Completed" alt=""></a>';
                 if ($user_level > 1) {
-                    echo '<a href="todo.php?action=delete&id=' . $resource['id'] . '&home=' . $home . '"><img src="../resources/delete.png" class="icon"></a><a href="todo.php?action=edit&id=' . $resource['id'] . '"><img src="../resources/edit.png" class="icon"></a>';
+                    echo '<a href="todo.php?action=delete&id=' . $resource['id'] . '&home=' . $home . '"><img src="../resources/delete.png" class="icon" alt=""></a><a href="todo.php?action=edit&id=' . $resource['id'] . '"><img src="../resources/edit.png" class="icon" alt=""></a>';
                 }
                 echo "</td>";
                 echo "</tr>";
