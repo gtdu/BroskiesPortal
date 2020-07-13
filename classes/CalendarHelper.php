@@ -28,21 +28,19 @@ class CalendarHelper extends Helper
             echo "</tr>";
 
             for ($i = 0; $i < 7; $i++) {
-                echo "<td>";
                 // Pull events on that day only
                 $events = $ical->eventsFromRange($i . ' day', ($i) . ' day');
                 // Check if there is an event
                 if (!empty($events)) {
                     // Render each event
-                    echo "<ul>";
+                    echo "<td><ul>";
                     foreach ($events as $event) {
                         echo "<li>" . $event->summary . "</li>";
                     }
-                    echo "</ul>";
+                    echo "</ul></td>";
                 } else {
-                    echo "❌";
+                    echo "<td style='text-align: center'>❌</td>";
                 }
-                echo "</td>";
             }
             echo "</table></div>";
         } catch (Exception $e) {

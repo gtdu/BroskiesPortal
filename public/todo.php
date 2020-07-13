@@ -68,7 +68,7 @@ include_once("../includes/navbar.php");
     <h1 class="mt-2">To-Do</h1>
 <?php
 
-if ($site->userCorePem > 1) {
+if ($site->userCorePem >= 3) {
     // Render the correct form
     if ($_GET['action'] == 'create') {
         include_once("../components/newTodoForm.php");

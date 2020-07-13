@@ -52,7 +52,7 @@ include_once("../includes/navbar.php");
         </div>
         <?php
         // Check if they are core admins
-        if ($site->userCorePem > 1) {
+        if ($site->userCorePem >= 4) {
             ?>
             <hr/>
             <div class="pl-4 pr-4 mb-4">
