@@ -39,6 +39,20 @@ include_once("../includes/navbar.php");
 
 ?>
     <div class="content container">
+        <?php
+        // Check if the user is an admin
+        // Admins are able to manage users and modules
+        if ($result['core'] > 3) {
+            ?>
+            <li class="nav-item active">
+                <a class="nav-link" href="../public/users.php">Manage Users</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="../public/modules.php">Manage Modules</a>
+            </li>
+            <?php
+        }
+        ?>
         <div class="pl-4 pr-4 mb-4 mt-4">
             <form method="post">
                 <div class="form-group">
