@@ -40,27 +40,20 @@ class AdminHelper extends Helper
      *
      * @param $name string The user's name. We recommend Last, First
      * @param $slack_id string The user's slack ID
-     * @param $password string The user's password
-     * @param $phone string The user's phone number
      * @return bool
      */
-    public function newUser($name, $slack_id, $password, $phone)
+    public function newUser($name, $slack_id)
     {
-        // Clean data
-        $phone = removeNonAlphaNumeric($phone);
-
         // Validate data
-        if (empty($name) || empty($slack_id) || empty($password) || empty($phone)) {
+        if (empty($name) || empty($slack_id)) {
             $this->error = "All fields are required";
             return false;
         }
 
         // Insert into the DB
-        $handle = $this->conn->prepare('INSERT INTO users (name, slack_id, password, phone) VALUES (?, ?, ?, ?)');
+        $handle = $this->conn->prepare('INSERT INTO users (name, slack_id) VALUES (?, ?)');
         $handle->bindValue(1, $name);
         $handle->bindValue(2, $slack_id);
-        $handle->bindValue(3, password_hash($password, PASSWORD_DEFAULT));
-        $handle->bindValue(4, $phone);
 
         // Check if the operation was successful
         if ($handle->execute()) {
@@ -92,31 +85,6 @@ class AdminHelper extends Helper
         // Perform operation
         $handle = $this->conn->prepare('UPDATE users SET `' . $perm_field . '` = ? WHERE id = ?');
         $handle->bindValue(1, $perm_level);
-        $handle->bindValue(2, $user_id);
-        return $handle->execute();
-    }
-
-    /**
-     * Update the users phone number
-     *
-     * @param $user_id int The user's DB ID
-     * @param $value string The phone number
-     * @return bool
-     */
-    public function setUserPhone($user_id, $value)
-    {
-        // Clean data
-        $value = removeNonAlphaNumeric($value);
-
-        // Validate data
-        if (empty($user_id) || empty($value)) {
-            $this->error = "All fields are required";
-            return false;
-        }
-
-        // Perform operation
-        $handle = $this->conn->prepare('UPDATE users SET `phone` = ? WHERE id = ?');
-        $handle->bindValue(1, $value);
         $handle->bindValue(2, $user_id);
         return $handle->execute();
     }

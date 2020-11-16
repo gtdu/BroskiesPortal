@@ -123,16 +123,8 @@ CREATE TABLE `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `slack_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
-  `phone` bigint(20) DEFAULT NULL,
   `session_token` varchar(255) DEFAULT NULL,
   `core` int(1) NOT NULL DEFAULT '1',
-  `jboard` int(1) NOT NULL DEFAULT '1',
-  `lore book` int(1) NOT NULL DEFAULT '1',
-  `rush` int(1) NOT NULL DEFAULT '0',
-  `late plate` int(1) NOT NULL DEFAULT '1',
-  `pledges` int(1) NOT NULL DEFAULT '0',
-  `mail bot` int(1) NOT NULL DEFAULT '0',
-  `policy` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

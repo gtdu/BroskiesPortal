@@ -32,7 +32,7 @@ class APIHelper extends Helper
         $result = $handle->fetchAll(PDO::FETCH_ASSOC);
 
         if (!empty($result)) {
-            $handle = $this->conn->prepare('SELECT `' . $result[0]['pem_name'] . '`, name, slack_id, phone, id, core FROM users WHERE session_token = ? LIMIT 1');
+            $handle = $this->conn->prepare('SELECT `' . $result[0]['pem_name'] . '`, name, slack_id, id, core FROM users WHERE session_token = ? LIMIT 1');
             $handle->bindValue(1, $session_token);
             $handle->execute();
             $result2 = $handle->fetchAll(PDO::FETCH_ASSOC);
@@ -41,7 +41,6 @@ class APIHelper extends Helper
                 $data = array(
                     'name' => $result2[0]['name'],
                     'slack_id' => $result2[0]['slack_id'],
-                    'phone' => $result2[0]['phone'],
                     'level' => $result2[0][$result[0]['pem_name']]
                 );
 
@@ -96,7 +95,7 @@ class APIHelper extends Helper
     */
     public function getAllData()
     {
-        $handle = $this->conn->prepare('SELECT id, name, slack_id, phone FROM users ORDER BY name');
+        $handle = $this->conn->prepare('SELECT id, name, slack_id FROM users ORDER BY name');
         $handle->execute();
         return $handle->fetchAll(PDO::FETCH_ASSOC);
     }

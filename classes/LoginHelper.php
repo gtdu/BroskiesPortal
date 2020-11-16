@@ -53,6 +53,50 @@ class LoginHelper extends Helper
             return false;
         }
     }
+    /**
+     * Validate login credentials
+     *
+     * @param String The slack user ID
+     * @return Boolean If the login credentials are valid
+     */
+    public function createLogin($id)
+    {
+        // Check if required parameters are provided
+        if (empty($id)) {
+            $this->error = "All fields are required";
+            return false;
+        }
+
+        // Query the DB if the slack_id exists
+        $handle = $this->conn->prepare('SELECT id, name FROM users WHERE slack_id = ? LIMIT 1');
+        $handle->bindValue(1, $id);
+        $handle->execute();
+        $result = $handle->fetchAll(PDO::FETCH_ASSOC);
+
+        // Make sure there was a result
+        if (!empty($result)) {
+            // Generate a session token
+            try {
+                $token = Uuid::uuid4()->toString();
+            } catch (Exception $e) {
+                $this->error = "Unable to generate session token";
+                return false;
+            }
+
+            // Update the user with the session token
+            $handle = $this->conn->prepare('UPDATE users SET session_token = ? WHERE id = ?');
+            $handle->bindValue(1, $token);
+            $handle->bindValue(2, $result[0]['id']);
+            $handle->execute();
+
+            // Store in the session
+            $_SESSION['token'] = $token;
+
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
     * Destroy the session and remove the session token from the DB

@@ -42,7 +42,6 @@ if (empty($result) || $result['core'] == 0) {
                 // Remove unnecessary info
                 unset($data['id']);
                 unset($data['slack_id']);
-                unset($data['phone']);
                 unset($data['core']);
                 unset($data['name']);
                 unset($data['password']);
