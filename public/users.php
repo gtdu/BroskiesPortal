@@ -61,7 +61,7 @@ if ($_GET['action'] == 'delete') {
         <tr>
             <th rowspan="2" style='min-width: 175px;'>Name</th>
             <th rowspan="2">&nbsp;</th>
-            <th colspan="<?php echo(count($keys) - 5); ?>">Permissions</th>
+            <th colspan="<?php echo(count($keys) - 4); ?>">Permissions</th>
         </tr>
         <tr>
             <th style='min-width: 125px;'>CORE</th>
@@ -91,12 +91,14 @@ if ($_GET['action'] == 'delete') {
             echo "<span style='color: blue'>MEC Officer</span>";
         } elseif ($user['core'] == 4) {
             echo "<span style='color: orange'>EC Officer</span>";
+        } elseif ($user['core'] == 5) {
+            echo "<span style='color: gold'>Owner</span>";
         } else {
             echo "ERROR";
         }
         echo '</td>';
         for ($i=6; $i < count($keys); $i++) {
-            $levels = explode(",", $modules[$i - 5]['levelNames']);
+            $levels = explode(",", $modules[$i - 4]['levelNames']);
 
             echo "<td>";
             if ($user[$keys[$i]] == 0) {
