@@ -12,8 +12,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_URL, "https://slack.com/api/oauth.access?client_id=" . $config['slack_id'] . "&client_secret=" . $config['slack_secret'] . "&code=" . $_REQUEST['code']);
 $output = json_decode(curl_exec($ch));
 $user_id = $output->user_id;
-$token = $output->access_token;
-if (empty($user_id) || empty($access_token)) {
+if (empty($user_id)) {
     $_SESSION['error'][0] = "Error getting the access token";
     header("Location: index.php");
     die();
