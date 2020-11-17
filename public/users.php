@@ -11,17 +11,7 @@ $site->setPage($page);
 $helper = new AdminHelper($config);
 $users = $helper->getUsers();
 
-if ($_POST['action'] == 'newUser') {
-    if ($helper->newUser($_POST['name'], $_POST['slack_id'])) {
-        $_SESSION['success'] = true;
-        header("Location: ?");
-        die();
-    } else {
-        $_SESSION['error'][0] = $helper->getErrorMessage();
-        header("Location: ?");
-        die();
-    }
-} elseif ($_POST['action'] == 'deleteUser') {
+if ($_POST['action'] == 'deleteUser') {
     if ($helper->deleteUser($_POST['user_id'])) {
         $_SESSION['success'] = true;
         header("Location: ?");
@@ -54,16 +44,12 @@ include_once("../includes/navbar.php");
     <h1 class="mt-2">Manage Users</h1>
 <?php
 // Render the correct form
-if ($_GET['action'] == 'create') {
-    include_once("../components/newUserForm.php");
-} elseif ($_GET['action'] == 'delete') {
+if ($_GET['action'] == 'delete') {
     $item = $helper->getUserByID($_GET['id']);
     include_once("../components/deleteUserForm.php");
 } elseif ($_GET['action'] == 'edit') {
     $item = $helper->getUserByID($_GET['id']);
     include_once("../components/changePemForm.php");
-} else {
-    echo '<a href="?action=create" role="button" class="btn btn-success mb-3">Create User</a>';
 }
 ?>
 <div style="overflow-x: scroll;">

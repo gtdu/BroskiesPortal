@@ -24,13 +24,14 @@ class LoginHelper extends Helper
         }
 
         // Query the DB if the slack_id exists
-        $handle = $this->conn->prepare('SELECT id, name FROM users WHERE slack_id = ? LIMIT 1');
+        $handle = $this->conn->prepare('SELECT id, name, core FROM users WHERE slack_id = ? LIMIT 1');
         $handle->bindValue(1, $id);
         $handle->execute();
         $result = $handle->fetchAll(PDO::FETCH_ASSOC);
 
         // Make sure there was a result
         if (!empty($result)) {
+
             // Generate a session token
             try {
                 $token = Uuid::uuid4()->toString();
@@ -53,14 +54,14 @@ class LoginHelper extends Helper
             return false;
         }
     }
+
     /**
      * Validate login credentials
      *
      * @param String The slack user ID
-     * @return Boolean If the login credentials are valid
+     * @return bool If the user's core permission > 0
      */
-    public function createLogin($id)
-    {
+    public function canLogin($id) {
         // Check if required parameters are provided
         if (empty($id)) {
             $this->error = "All fields are required";
@@ -68,30 +69,37 @@ class LoginHelper extends Helper
         }
 
         // Query the DB if the slack_id exists
-        $handle = $this->conn->prepare('SELECT id, name FROM users WHERE slack_id = ? LIMIT 1');
+        $handle = $this->conn->prepare('SELECT core FROM users WHERE slack_id = ? LIMIT 1');
         $handle->bindValue(1, $id);
         $handle->execute();
         $result = $handle->fetchAll(PDO::FETCH_ASSOC);
 
         // Make sure there was a result
-        if (!empty($result)) {
-            // Generate a session token
-            try {
-                $token = Uuid::uuid4()->toString();
-            } catch (Exception $e) {
-                $this->error = "Unable to generate session token";
-                return false;
-            }
+        return !empty($result) && $result[0]['core'] > 0;
+    }
 
-            // Update the user with the session token
-            $handle = $this->conn->prepare('UPDATE users SET session_token = ? WHERE id = ?');
-            $handle->bindValue(1, $token);
-            $handle->bindValue(2, $result[0]['id']);
-            $handle->execute();
+    /**
+     * Create a new user
+     *
+     * @param $name string The user's name. We recommend Last, First
+     * @param $slack_id string The user's slack ID
+     * @return bool
+     */
+    public function newUser($name, $slack_id)
+    {
+        // Validate data
+        if (empty($name) || empty($slack_id)) {
+            $this->error = "All fields are required";
+            return false;
+        }
 
-            // Store in the session
-            $_SESSION['token'] = $token;
+        // Insert into the DB
+        $handle = $this->conn->prepare('INSERT INTO users (name, slack_id) VALUES (?, ?)');
+        $handle->bindValue(1, $name);
+        $handle->bindValue(2, $slack_id);
 
+        // Check if the operation was successful
+        if ($handle->execute()) {
             return true;
         } else {
             return false;

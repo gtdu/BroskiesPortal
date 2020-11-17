@@ -36,34 +36,6 @@ class AdminHelper extends Helper
     }
 
     /**
-     * Create a new user
-     *
-     * @param $name string The user's name. We recommend Last, First
-     * @param $slack_id string The user's slack ID
-     * @return bool
-     */
-    public function newUser($name, $slack_id)
-    {
-        // Validate data
-        if (empty($name) || empty($slack_id)) {
-            $this->error = "All fields are required";
-            return false;
-        }
-
-        // Insert into the DB
-        $handle = $this->conn->prepare('INSERT INTO users (name, slack_id) VALUES (?, ?)');
-        $handle->bindValue(1, $name);
-        $handle->bindValue(2, $slack_id);
-
-        // Check if the operation was successful
-        if ($handle->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * Update a specific permission for the user
      *
      * @param $user_id int The user's DB ID

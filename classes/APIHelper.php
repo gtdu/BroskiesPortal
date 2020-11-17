@@ -95,7 +95,7 @@ class APIHelper extends Helper
     */
     public function getAllData()
     {
-        $handle = $this->conn->prepare('SELECT id, name, slack_id FROM users ORDER BY name');
+        $handle = $this->conn->prepare('SELECT id, name, slack_id FROM users WHERE core > 0 ORDER BY name');
         $handle->execute();
         return $handle->fetchAll(PDO::FETCH_ASSOC);
     }
